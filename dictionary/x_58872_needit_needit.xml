@@ -3,8 +3,8 @@
         <element attributes="edge_encryption_enabled=true" label="Requested for email" mandatory="true" max_length="40" name="u_requested_for_email" type="string"/>
         <element attributes="edge_encryption_enabled=true" choice="3" default="hr1" label="What needed" mandatory="true" max_length="40" name="u_what_needed" type="string">
             <choice>
-                <element inactive_on_update="false" label="Your Department Choice 2" sequence="8" value="your department choice 2"/>
-                <element inactive_on_update="false" label="Your Department Choice 1" sequence="7" value="your department choice 1"/>
+                <element inactive_on_update="false" label="Your Department Choice 2" sequence="8" value="yourdepartmentchoice2"/>
+                <element inactive_on_update="false" label="Your Department Choice 1" sequence="7" value="yourdepartmentchoice1"/>
                 <element inactive_on_update="false" label="Facilities 2" sequence="1" value="facilities2"/>
                 <element inactive_on_update="false" label="Other" sequence="6" value="other"/>
                 <element inactive_on_update="false" label="Facilities 1" sequence="0" value="facilities1"/>
@@ -16,9 +16,10 @@
         </element>
         <element attributes="edge_encryption_enabled=true" choice="3" default="legal" label="Request type" mandatory="true" max_length="40" name="u_request_type" type="string">
             <choice>
-                <element inactive_on_update="false" label="Human Resources" sequence="0" value="hr"/>
-                <element inactive_on_update="false" label="Your Department Choice" sequence="3" value="your department choice"/>
-                <element inactive_on_update="false" label="Facilities" sequence="1" value="facilities"/>
+                <element inactive_on_update="false" label="Human Resources" sequence="1" value="hr"/>
+                <element inactive_on_update="false" label="Your Department Choice" sequence="4" value="your department choice"/>
+                <element inactive_on_update="false" label="Facilities" sequence="0" value="facilities"/>
+                <element inactive_on_update="false" label="Other" sequence="3" value="other"/>
                 <element inactive_on_update="false" label="Legal" sequence="2" value="legal"/>
             </choice>
         </element>
