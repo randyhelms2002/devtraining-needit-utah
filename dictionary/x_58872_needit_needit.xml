@@ -28,5 +28,7 @@
         <element attributes="edge_encryption_enabled=true" label="Manager" max_length="100" name="manager" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Other" max_length="40" name="u_other" type="string"/>
         <element label="Requested for" mandatory="true" max_length="32" name="u_requested_for" reference="sys_user" type="reference"/>
+        <element attributes="target_field=percent_complete_target,target_threshold_colors=0:firebrick;33:gold;66:yellowgreen;90:darkgreen,target_field=target" label="% complete" max_length="15" name="complete" type="percent_complete"/>
+        <element label="Target" max_length="20" name="target" type="decimal"/>
     </element>
 </database>
