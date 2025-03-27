@@ -53,7 +53,7 @@
         <update_guid_history>4a784390a6d8ea1071b636674033334e:1941175858</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="% Escalations acknowledged (by groups)">ea780b9053d8ea1073ca91e0a0490ead</sys_audit_delete>
+        <sys_audit_delete display_value="">ea780b9053d8ea1073ca91e0a0490ead</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-03-11 16:20:03</sys_created_on>

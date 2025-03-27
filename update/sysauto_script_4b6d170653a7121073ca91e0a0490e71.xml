@@ -2,6 +2,7 @@
     <sysauto_script action="INSERT_OR_UPDATE">
         <active>true</active>
         <business_calendar/>
+        <can_iterate>false</can_iterate>
         <condition/>
         <conditional>false</conditional>
         <entered_time>1970-01-01 08:00:00</entered_time>
@@ -33,6 +34,8 @@ while (overdueNITasks.next()) {
     gs.info("Overdue NeedIt Task record = " + overdueNITasks.number);
 	gs.eventQueue('x_58872_needit.overdueNeedItTask',overdueNITasks,overdueNITasks.number,gs.getUserName());
 }]]></script>
+        <source_filter/>
+        <source_table/>
         <sys_class_name>sysauto_script</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-02-07 21:35:26</sys_created_on>

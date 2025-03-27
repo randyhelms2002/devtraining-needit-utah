@@ -2,6 +2,7 @@
     <sysauto_script action="INSERT_OR_UPDATE">
         <active>true</active>
         <business_calendar/>
+        <can_iterate>false</can_iterate>
         <condition/>
         <conditional>false</conditional>
         <entered_time>1970-01-01 00:05:00</entered_time>
@@ -39,6 +40,8 @@ while (overdueNITasks.next()) {
     overdueNITasks.state = 4;
     overdueNITasks.update();
 }]]></script>
+        <source_filter/>
+        <source_table/>
         <sys_class_name>sysauto_script</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-02-10 21:38:30</sys_created_on>

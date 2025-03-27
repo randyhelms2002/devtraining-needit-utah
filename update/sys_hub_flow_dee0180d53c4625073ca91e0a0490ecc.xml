@@ -44,7 +44,7 @@
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
         <sys_update_name>sys_hub_flow_dee0180d53c4625073ca91e0a0490ecc</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-11 19:36:21</sys_updated_on>
+        <sys_updated_on>2025-03-25 21:31:51</sys_updated_on>
         <type>flow</type>
         <version>2</version>
     </sys_hub_flow>
@@ -731,98 +731,6 @@
     <sys_hub_pill_compound action="delete_multiple" query="attached_to=dee0180d53c4625073ca91e0a0490ecc"/>
     <sys_hub_flow_variable action="delete_multiple" query="model=dee0180d53c4625073ca91e0a0490ecc"/>
     <sys_documentation action="INSERT_OR_UPDATE">
-        <element>from_address</element>
-        <help/>
-        <hint/>
-        <label>From address</label>
-        <language>en</language>
-        <name>var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc</name>
-        <plural/>
-        <sys_class_name>sys_documentation</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2025-03-01 00:40:53</sys_created_on>
-        <sys_id>a791d84d53c4625073ca91e0a0490e5f</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name>From address</sys_name>
-        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
-        <sys_policy/>
-        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
-        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc_from_address_en</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-01 00:40:53</sys_updated_on>
-        <url/>
-        <url_target/>
-    </sys_documentation>
-    <sys_documentation action="INSERT_OR_UPDATE">
-        <element>subject</element>
-        <help/>
-        <hint/>
-        <label>Subject</label>
-        <language>en</language>
-        <name>var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc</name>
-        <plural/>
-        <sys_class_name>sys_documentation</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2025-03-01 00:40:53</sys_created_on>
-        <sys_id>ab91d84d53c4625073ca91e0a0490e55</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name>Subject</sys_name>
-        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
-        <sys_policy/>
-        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
-        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc_subject_en</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-01 00:40:53</sys_updated_on>
-        <url/>
-        <url_target/>
-    </sys_documentation>
-    <sys_documentation action="INSERT_OR_UPDATE">
-        <element>target_table_name</element>
-        <help/>
-        <hint/>
-        <label>Target Table</label>
-        <language>en</language>
-        <name>var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc</name>
-        <plural/>
-        <sys_class_name>sys_documentation</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2025-03-01 00:40:53</sys_created_on>
-        <sys_id>af91d84d53c4625073ca91e0a0490e4e</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name>Target Table</sys_name>
-        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
-        <sys_policy/>
-        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
-        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc_target_table_name_en</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-01 00:40:53</sys_updated_on>
-        <url/>
-        <url_target/>
-    </sys_documentation>
-    <sys_documentation action="INSERT_OR_UPDATE">
-        <element>user</element>
-        <help/>
-        <hint/>
-        <label>User</label>
-        <language>en</language>
-        <name>var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc</name>
-        <plural/>
-        <sys_class_name>sys_documentation</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2025-03-01 00:40:53</sys_created_on>
-        <sys_id>e391d84d53c4625073ca91e0a0490e5c</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name>User</sys_name>
-        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
-        <sys_policy/>
-        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
-        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc_user_en</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-01 00:40:53</sys_updated_on>
-        <url/>
-        <url_target/>
-    </sys_documentation>
-    <sys_documentation action="INSERT_OR_UPDATE">
         <element>body_text</element>
         <help/>
         <hint/>
@@ -833,13 +741,36 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-03-01 00:40:53</sys_created_on>
-        <sys_id>e791d84d53c4625073ca91e0a0490e52</sys_id>
+        <sys_id>0006188147282210f0631ce4316d43a2</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Body Text</sys_name>
         <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
         <sys_policy/>
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc_body_text_en</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-01 00:40:53</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>from_address</element>
+        <help/>
+        <hint/>
+        <label>From address</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-01 00:40:53</sys_created_on>
+        <sys_id>0406188147282210f0631ce4316d43a6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>From address</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc_from_address_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2025-03-01 00:40:53</sys_updated_on>
         <url/>
@@ -856,13 +787,36 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-03-01 00:40:53</sys_created_on>
-        <sys_id>eb91d84d53c4625073ca91e0a0490e62</sys_id>
+        <sys_id>4806188147282210f0631ce4316d43bd</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Target Record</sys_name>
         <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
         <sys_policy/>
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc_target_record_en</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-01 00:40:53</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>user</element>
+        <help/>
+        <hint/>
+        <label>User</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-01 00:40:53</sys_created_on>
+        <sys_id>4c06188147282210f0631ce4316d43c4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>User</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc_user_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2025-03-01 00:40:53</sys_updated_on>
         <url/>
@@ -879,13 +833,59 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-03-01 00:40:53</sys_created_on>
-        <sys_id>ef91d84d53c4625073ca91e0a0490e58</sys_id>
+        <sys_id>8c06188147282210f0631ce4316d43a9</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Inbound Email</sys_name>
         <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
         <sys_policy/>
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc_inbound_email_en</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-01 00:40:53</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>target_table_name</element>
+        <help/>
+        <hint/>
+        <label>Target Table</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-01 00:40:53</sys_created_on>
+        <sys_id>c006188147282210f0631ce4316d43c1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Target Table</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc_target_table_name_en</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-01 00:40:53</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>subject</element>
+        <help/>
+        <hint/>
+        <label>Subject</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-01 00:40:53</sys_created_on>
+        <sys_id>cc06188147282210f0631ce4316d43b9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Subject</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_dee0180d53c4625073ca91e0a0490ecc_subject_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2025-03-01 00:40:53</sys_updated_on>
         <url/>
@@ -1610,7 +1610,7 @@
         <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
         <sys_policy/>
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_a4a11c4d53c4625073ca91e0a0490ea4_target_record_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2025-03-01 00:40:58</sys_updated_on>
         <url/>
@@ -1633,7 +1633,7 @@
         <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
         <sys_policy/>
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_a4a11c4d53c4625073ca91e0a0490ea4_body_text_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2025-03-01 00:40:58</sys_updated_on>
         <url/>
@@ -1656,7 +1656,7 @@
         <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
         <sys_policy/>
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_a4a11c4d53c4625073ca91e0a0490ea4_user_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2025-03-01 00:40:58</sys_updated_on>
         <url/>
@@ -1679,7 +1679,7 @@
         <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
         <sys_policy/>
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_a4a11c4d53c4625073ca91e0a0490ea4_inbound_email_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2025-03-01 00:40:58</sys_updated_on>
         <url/>
@@ -1702,7 +1702,7 @@
         <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
         <sys_policy/>
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_a4a11c4d53c4625073ca91e0a0490ea4_target_table_name_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2025-03-01 00:40:57</sys_updated_on>
         <url/>
@@ -1725,7 +1725,7 @@
         <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
         <sys_policy/>
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_a4a11c4d53c4625073ca91e0a0490ea4_subject_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2025-03-01 00:40:58</sys_updated_on>
         <url/>
@@ -1748,7 +1748,7 @@
         <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
         <sys_policy/>
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
-        <sys_update_name/>
+        <sys_update_name>sys_documentation_var__m_sys_hub_flow_input_a4a11c4d53c4625073ca91e0a0490ea4_from_address_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2025-03-01 00:40:58</sys_updated_on>
         <url/>
