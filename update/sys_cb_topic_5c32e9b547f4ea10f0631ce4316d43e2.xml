@@ -1,0 +1,4379 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_topic">
+    <sys_cb_topic action="INSERT_OR_UPDATE">
+        <applicability/>
+        <applicability_mode>query</applicability_mode>
+        <autopilot_topic>false</autopilot_topic>
+        <category/>
+        <channels/>
+        <connect_queue/>
+        <context_profiles/>
+        <description/>
+        <dialog_acts_enabled>false</dialog_acts_enabled>
+        <expose_on_palette>false</expose_on_palette>
+        <flexible_conversation_switching>true</flexible_conversation_switching>
+        <foundational>false</foundational>
+        <graph>{
+  "graph_api_version": "1.0.74",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "378ad13fcfac4ead8bc77e5a4dba6a79": {
+          "id": "378ad13fcfac4ead8bc77e5a4dba6a79",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          },
+          "parameters": [
+            {
+              "name": "catalog_item_id",
+              "value": "",
+              "id": "8fa12fe8f0e8479abed78d3b848efe48",
+              "disabled": true,
+              "referenced": true,
+              "type": "String",
+              "hint": "",
+              "required": true
+            },
+            {
+              "name": "execute_contextual_search",
+              "value": "false",
+              "id": "0e4f4f5572554f2db7c27392103bc2b6",
+              "referenced": true,
+              "disabled": true,
+              "type": "String",
+              "hint": "",
+              "required": false
+            },
+            {
+              "name": "confirm_catalog_item",
+              "value": "true",
+              "id": "b7c5f4768da94155a81b6d5ffc4cea22",
+              "referenced": false,
+              "disabled": true,
+              "type": "String",
+              "hint": "",
+              "required": false
+            },
+            {
+              "type": "True/False",
+              "value": "false",
+              "id": "ec4a34bcfc3944a195c6266d03a67589",
+              "name": "show_end_state_card",
+              "referenced": true,
+              "disabled": true
+            }
+          ],
+          "variableIds": [
+            "8fa12fe8f0e8479abed78d3b848efe48",
+            "0e4f4f5572554f2db7c27392103bc2b6",
+            "b7c5f4768da94155a81b6d5ffc4cea22",
+            "ec4a34bcfc3944a195c6266d03a67589"
+          ]
+        },
+        "43ce9c239d754a489c4e86af697c5538": {
+          "id": "43ce9c239d754a489c4e86af697c5538",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "outputVariables": [
+            {
+              "key": "record_id",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaVars.record_id}}",
+                        "displayValue": "vaVars➛record_id"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "disabled": true,
+              "cannotBeDeleted": false
+            },
+            {
+              "key": "record_table",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaVars.record_table}}",
+                        "displayValue": "vaVars➛record_table"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple",
+              "disabled": true,
+              "cannotBeDeleted": false
+            },
+            {
+              "key": "variables",
+              "value": "(function execute() {\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    if (!itemJson || !itemJson.variables)\n        return '';\n    var variablesObj = {};\n    for (i = 0; i &lt; itemJson.variables.length; i++) {\n        variablesObj[itemJson.variables[i].name] = itemJson.variables[i].value;\n    }\n    return JSON.stringify(variablesObj);\n})()\n",
+              "mode": "script",
+              "disabled": true,
+              "cannotBeDeleted": false
+            }
+          ]
+        },
+        "66cdc45cec0b4e7d9a9336a3802700c6": {
+          "id": "66cdc45cec0b4e7d9a9336a3802700c6",
+          "name": "Set Selected Item",
+          "script": "(function execute() {\n    var itemId = vaInputs.catalog_item_id.getValue();\n    var itemJSON = new sn_sc.CatalogConversationHelper().getItem(itemId);\n    vaVars.itemJSON = JSON.stringify(itemJSON);\n    vaVars.itemName = itemJSON.name;\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "d12b5d39500946759c86e9e81a8cd6bf": {
+          "id": "d12b5d39500946759c86e9e81a8cd6bf",
+          "stepType": "TextOutput",
+          "name": "Item Description",
+          "value": [
+            {
+              "value": "(function execute() {\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    var response = gs.getMessageLang(\"Here are some more details about {0}\", vaContext.getRequesterLang(), [vaVars.itemName]);\n    if (itemJson.description) \n        return response + itemJson.description;\n\n    return gs.getMessageLang(\"Selected {0}\", vaContext.getRequesterLang(), [vaVars.itemName]);\n})()\n",
+              "mode": "script"
+            }
+          ],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "secure": false,
+          "requestFeedback": true
+        },
+        "bc6e0a39cbab451bbdaaba62df33c5ed": {
+          "id": "bc6e0a39cbab451bbdaaba62df33c5ed",
+          "stepType": "BooleanPrompt",
+          "name": "Proceed",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": ""
+                  },
+                  {
+                    "text": "Should I proceed with this?"
+                  },
+                  {
+                    "text": ""
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "optional": false,
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "c2887f797885435894a92ab6646947fb",
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "inputType": {
+            "format": "Text",
+            "script": ""
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": ""
+        },
+        "7b682095e5e4412db06503744afd467c": {
+          "id": "7b682095e5e4412db06503744afd467c",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "d0437f34d26b444db33f34c1a27ac180": {
+          "id": "d0437f34d26b444db33f34c1a27ac180",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "1b48cc688f4c41e5a22d0489342b7223": {
+          "id": "1b48cc688f4c41e5a22d0489342b7223",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "071d89e4cfc1485a8e5d1d3dc20446da": {
+          "id": "071d89e4cfc1485a8e5d1d3dc20446da",
+          "stepType": "TextOutput",
+          "name": "Start Questions",
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "OK, let's finish up your request."
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple"
+            }
+          ],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "secure": false,
+          "requestFeedback": true
+        },
+        "581cfa3a32bc4121a49d644a0c2c6658": {
+          "id": "581cfa3a32bc4121a49d644a0c2c6658",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "7752c1440f114277be2ae841750f5585": {
+          "id": "7752c1440f114277be2ae841750f5585",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "0bbee88923544b5d864a7ebfa5aa7b1d": {
+          "id": "0bbee88923544b5d864a7ebfa5aa7b1d",
+          "stepType": "BooleanPrompt",
+          "name": "Submit Producer",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Alright, you're all set. Shall I submit this request?"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "optional": false,
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "eb764928a34242da91ba1bc092040791",
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "inputType": {
+            "format": "Text",
+            "script": ""
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": ""
+        },
+        "370d7a1a97c54f938615de810aeb4465": {
+          "id": "370d7a1a97c54f938615de810aeb4465",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "8fb89065d150429487db975b1272593f": {
+          "id": "8fb89065d150429487db975b1272593f",
+          "name": "Insert the Record",
+          "script": "(function execute() {\n   var itemJson = JSON.parse(vaVars.itemJSON);\n    var variablesObj = {};\n    var attachmentIds = [];\n    for (i = 0; i &lt; itemJson.variables.length; i++) {\n        variablesObj[itemJson.variables[i].name] = itemJson.variables[i].value;\n        if (itemJson.variables[i].type === 33)\n           attachmentIds.push(itemJson.variables[i].value);\n    }\n   var reqObject = {\n       \"sysparm_id\" : itemJson.sys_id,\n       \"sysparm_action\" : 'execute_producer',\n        \"variables\" : variablesObj,\n        \"engagement_channel\" : 'va'\n   }\n   var response = new sn_sc.CatItem(itemJson.sys_id).submitProducer(reqObject);\n   if (response) {\n       vaVars.record_id = response.sys_id;\n       vaVars.record_table = response.table;\n       // add attachment to record\n       var mediaLinksFormAttachment = vaVars.media_links_form_attachment.split(',');\n       for (var i in mediaLinksFormAttachment)\n           vaSystem.attachToRecord(mediaLinksFormAttachment[i], response.table, response.sys_id);\n\n       // move attachment variable to record\n       var gr = new GlideRecord('sys_attachment');\n       gr.addQuery('sys_id', 'IN' , attachmentIds);\n       gr.query();\n       while (gr.next()) {\n           gr.setValue('table_name', 'ZZ_YY' + response.table);\n           gr.setValue('table_sys_id', response.sys_id);\n           gr.update();\n       }\n   }\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "f7d41b80c7764dd1b1b9dda3acc23754": {
+          "id": "f7d41b80c7764dd1b1b9dda3acc23754",
+          "stepType": "BooleanPrompt",
+          "name": "Order Item",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Alright, you're all set. Shall I submit this request?"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "optional": false,
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "24784fef3a7c40229ea0c0db7b2b38ca",
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "inputType": {
+            "format": "Text",
+            "script": ""
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": ""
+        },
+        "015876b57058499b89fb0f0b0e0ed843": {
+          "id": "015876b57058499b89fb0f0b0e0ed843",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "907092bb1dbc48f7a4ae115e87ceb201": {
+          "id": "907092bb1dbc48f7a4ae115e87ceb201",
+          "name": "Checkout Cart",
+          "script": "(function execute() {\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    var cartname = \"vacart_\" + gs.generateGUID();\n    var cartObj = new sn_sc.CartJS(cartname);\n    cartObj.setRequestedFor(vaVars.request_for);\n    cartObj.setEngagementChannel('va');\n\n    var variablesObj = {};\n    var attachmentIds = [];\n    for (i = 0; i &lt; itemJson.variables.length; i++) {\n        variablesObj[itemJson.variables[i].name] = itemJson.variables[i].value;\n        if (itemJson.variables[i].type === 33)\n           attachmentIds.push(itemJson.variables[i].value);\n    }\n        \n\n    var reqObj = {\n        \"sysparm_id\" : itemJson.sys_id,\n        \"variables\" : variablesObj\n    };\n    cartObj.addToCart(reqObj);\n    var requestResponse = cartObj.checkoutCart(true);\n    var requestGr = new GlideRecord('sc_request');\n    if (requestGr.get(requestResponse.request_id)) {\n        var reqItemGr = new GlideRecord('sc_req_item');\n        reqItemGr.addQuery(\"request\", requestResponse.request_id);\n        reqItemGr.query();\n        if (reqItemGr.next()) {\n            vaVars.record_id = reqItemGr.getUniqueValue();\n            vaVars.record_table = 'sc_req_item';\n            // add attachment to record\n            var mediaLinksFormAttachment = vaVars.media_links_form_attachment.split(',');\n            for (var i in mediaLinksFormAttachment)\n                vaSystem.attachToRecord(mediaLinksFormAttachment[i], vaVars.record_table, vaVars.record_id);\n\n        }\n        // move attachment variable to record\n        var gr = new GlideRecord('sys_attachment');\n        gr.addQuery('sys_id', 'IN' , attachmentIds);\n        gr.query();\n        while (gr.next()) {\n            gr.setValue('table_name', 'ZZ_YY' + vaVars.record_table);\n            gr.setValue('table_sys_id', vaVars.record_id);\n            gr.update();\n        }\n    }\n})()",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "6e2ebbdb139b4b2bbd694be7637422e5": {
+          "id": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "9e6e235f722149a58b678031d642cc77": {
+          "id": "9e6e235f722149a58b678031d642cc77",
+          "stepType": "DateTimePrompt",
+          "name": "Question Date",
+          "prompt": {
+            "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "optional": false,
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "c31318903433407fafbc5e2e9ce7ba65",
+          "skippable": {
+            "mode": "script",
+            "value": "(function execute() {\n   return !JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].mandatory;\n})()\n"
+          },
+          "inputType": {
+            "format": "Text",
+            "script": ""
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": ""
+        },
+        "544e7e443c1a42b19cc4a9a950c1fa0d": {
+          "id": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "name": "Post Response",
+          "script": "(function execute() {\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    vaVars.validation_message = \"\";\n    var quesJson = itemJson.variables[vaVars.qIndex];\n    var type = quesJson.type;\n    var vaFieldValidator = new global.VAFieldValidator();\n    // If user doesn't want to proceed with the selected value and skips the question, the variable would be set to \"\"\n    var proceedWithDefaultValue = vaInputs.proceed_with_default.getValue();\n    switch (type) {\n        case 2:\n        case 6:\n        case 16:\n            var ans = vaInputs.question_text.getValue() || (proceedWithDefaultValue ? quesJson.display_value : \"\");\n            if (ans.trim().length === 0 &amp;&amp; itemJson.variables[vaVars.qIndex].mandatory) {\n                vaVars.validation_message = gs.getMessageLang('You must answer this question', vaContext.getRequesterLang());\n                break;\n            }\n            if (type === 2) {\n                itemJson.variables[vaVars.qIndex].value = ans;\n                vaInputs.question_text = \"\";\n                break;\n            }\n            var q = GlideappQuestion.getQuestion(itemJson.variables[vaVars.qIndex].sys_id);\n            var validresponse = q.validateRegex(ans);\n            if (validresponse) {\n                itemJson.variables[vaVars.qIndex].value = ans;\n                vaInputs.question_text = \"\";\n            } else if (!validresponse)\n                vaVars.validation_message = q.getValidationMessage();\n            break;\n        case 7:\n            var ans = (proceedWithDefaultValue ? quesJson.value : \"\");\n            if (vaInputs.question_choice.getValue()) {\n                switch (vaInputs.question_choice.getValue()) {\n                    case \"yes\":\n                        ans = \"true\";\n                        break;\n                    case \"no\":\n                    case \"no_data\":\n                    case \"\":\n                        ans = \"false\";\n                        break;\n                    default:\n                        ans = \"false\";\n                        break;\n                }\n            }\n            if (itemJson.variables[vaVars.qIndex].mandatory &amp;&amp; ans == \"false\")\n                vaVars.validation_message = gs.getMessageLang('It is a mandatory question, you cannot select No as the answer', vaContext.getRequesterLang());\n            else\n                itemJson.variables[vaVars.qIndex].value = ans;\n            vaInputs.question_choice = \"\";\n            break;\n        case 9:\n            itemJson.variables[vaVars.qIndex].value = vaInputs.question_date.getDisplayValue() || (proceedWithDefaultValue ? quesJson.display_value : \"\");\n            vaInputs.question_date = \"\";\n            break;\n        case 10:\n            itemJson.variables[vaVars.qIndex].value = vaInputs.question_date_time.getDisplayValue() || (proceedWithDefaultValue ? quesJson.display_value : \"\");\n            vaInputs.question_date_time = \"\";\n            break;\n        case 8:\n            var ans = (proceedWithDefaultValue ? quesJson.value : \"\");\n            if (vaInputs.question_reference)\n                ans = vaInputs.question_reference.getValue();\n\n            itemJson.variables[vaVars.qIndex].value = ans;\n            vaInputs.question_reference = \"\";\n            break;\n        case 1:\n        case 3:\n        case 4:\n        case 5:\n        case 18:\n        case 22:\n            var ans = (proceedWithDefaultValue ? quesJson.value : \"\");\n            if (vaInputs.question_choice) {\n                ans = vaInputs.question_choice.getValue();\n                ans = ans == 'no_data' ? '' : ans;\n            }\n            itemJson.variables[vaVars.qIndex].value = ans;\n            vaInputs.question_choice = \"\";\n            break;\n        case 26:\n            var ans = vaInputs.question_email.getValue() || (proceedWithDefaultValue ? quesJson.value : \"\");\n            if (vaInputs.question_email.getValue() || ans == \"\" || vaFieldValidator.validateEmailAddress(ans)) {\n                itemJson.variables[vaVars.qIndex].value = ans;\n                vaInputs.question_email = \"\";\n            } else\n                vaVars.validation_message = gs.getMessageLang(\"This isn't a valid email address\", vaContext.getRequesterLang());\n            break;\n        case 27:\n            var ans = vaInputs.question_url.getValue() || (proceedWithDefaultValue ? quesJson.value : \"\");\n            if (vaInputs.question_url.getValue() || ans == \"\" || vaFieldValidator.validateURL(ans)) {\n                itemJson.variables[vaVars.qIndex].value = ans;\n                vaInputs.question_url = \"\";\n            } else\n                vaVars.validation_message = gs.getMessageLang(\"This isn't a valid URL\", vaContext.getRequesterLang());\n            break;\n        case 28:\n            var ans = vaInputs.question_ip_address.getValue() || (proceedWithDefaultValue ? quesJson.value : \"\");\n            if (vaInputs.question_ip_address.getValue() || ans == \"\" || vaFieldValidator.validateIPAddress(ans)) {\n                itemJson.variables[vaVars.qIndex].value = ans;\n                vaInputs.question_ip_address = \"\";\n            } else\n                vaVars.validation_message = gs.getMessageLang(\"This isn't a valid IP Address\", vaContext.getRequesterLang());\n            break;\n        case 31:\n            var ans = quesJson.default_value + '';\n            if (quesJson.default_value &amp;&amp; proceedWithDefaultValue)\n                vaVars.request_for = ans;\n            else if (vaVars.request_for)\n                ans = vaVars.request_for;\n            itemJson.variables[vaVars.qIndex].value = ans;\n    }\n    itemJson.variables[vaVars.qIndex].field_info_messages = {};\n    itemJson.variables[vaVars.qIndex].field_warn_messages = {};\n    itemJson.variables[vaVars.qIndex].field_error_messages = {};\n\n    if (!vaVars.request_for)\n        vaVars.request_for = gs.getUserID() + '';\n    var executeDataLookup = false;\n    var executeDynamicValue = false;\n    if (quesJson.data_lookup_ids &amp;&amp; quesJson.data_lookup_ids.length != 0)\n        executeDataLookup = true;\n    if (itemJson.dynamic_value_variable_config &amp;&amp; itemJson.dynamic_value_variable_config[quesJson.sys_id] &amp;&amp; itemJson.dynamic_value_variable_config[quesJson.sys_id].length != 0)\n        executeDynamicValue = true;\n    if (executeDataLookup || executeDynamicValue) {\n        var helper = new sn_sc.CatalogConversationHelper();\n        vaVars.itemJSON = JSON.stringify(helper.executeVariableChangeHandlers(itemJson, quesJson.sys_id, executeDataLookup, executeDynamicValue));\n    } else\n        vaVars.itemJSON = JSON.stringify(itemJson);\n\n// resetting the value of proceed with default incase validation fails\n   if (vaVars.validation_message.length !== 0)\n       vaInputs.proceed_with_default = false;\n\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "eaeb64a0932f48ae931dc9ae538b1a44": {
+          "id": "eaeb64a0932f48ae931dc9ae538b1a44",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "241a800b7cb04587be59f51d05e97adb": {
+          "id": "241a800b7cb04587be59f51d05e97adb",
+          "stepType": "ScriptOutput",
+          "name": "Validation Message",
+          "output_type": "single_part",
+          "script": "(function execute() {\n      var singleOutMsg = new sn_cs.SinglePartOutMsg();\n       singleOutMsg.setTextPart(gs.getMessageLang('{0}. Answer the question again', vaContext.getRequesterLang(), [vaVars.validation_message]));\n       return singleOutMsg;\n})()",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "249d9e389a31425699f016421bf1bb16": {
+          "id": "249d9e389a31425699f016421bf1bb16",
+          "stepType": "TextPrompt",
+          "name": "Question Text",
+          "prompt": {
+            "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "optional": false,
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "9f673cec4f9445edb26f124540e590ca",
+          "skippable": {
+            "mode": "script",
+            "value": "(function execute() {\n   return !JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].mandatory;\n})()\n"
+          },
+          "inputType": {
+            "format": "Text",
+            "script": ""
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": "",
+          "requestFeedback": true
+        },
+        "74afb8d59ac445d3a9686ea2d2d55759": {
+          "stepType": "ReferenceChoicePrompt",
+          "name": "Question Reference",
+          "prompt": {
+            "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "optional": false,
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "0cca0191e5eb400f8f32e7d9d4e90f37",
+          "id": "74afb8d59ac445d3a9686ea2d2d55759",
+          "mode": "external",
+          "script": "(function execute() {\n    var options = [];\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    var variable = itemJson.variables[vaVars.qIndex];\n\n    var gr = new GlideRecordSecure(variable.reference);\n    gr.addQuery(variable.qualifier);\n    if (variable.ref_ac_order_by)\n        gr.orderBy(variable.ref_ac_order_by);\n    else\n        gr.orderBy(gr.getDisplayName());\n    \n    gr.query();\n\n    while (gr.next()) {\n        options.push({\n            \"value\" : gr.getUniqueValue(),\n            \"label\" : gr.getDisplayValue()\n        });\n    }\n    \n    return options;    \n})()",
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "No records found"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "condition": {
+            "value": "(function execute() {\n    var options = [];\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    var variable = itemJson.variables[vaVars.qIndex];\n\n    var gr = new GlideRecordSecure(variable.reference);\n    gr.addQuery(variable.qualifier);\n    if (variable.ref_ac_order_by)\n        gr.orderBy(variable.ref_ac_order_by);\n    else\n        gr.orderBy(gr.getDisplayName());\n    \n    gr.query();\n\n    while (gr.next()) {\n        options.push({\n            \"value\" : gr.getUniqueValue(),\n            \"label\" : gr.getDisplayValue()\n        });\n    }\n    \n    return options;    \n})()",
+            "mode": "external_script"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "skippable": {
+            "mode": "script",
+            "value": "(function execute() {\n   return !JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].mandatory;\n})()\n"
+          },
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "hasCardHeader": false,
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": "",
+          "isMultipleSelect": false
+        },
+        "1c3433aad5024281a08d704962be2c10": {
+          "id": "1c3433aad5024281a08d704962be2c10",
+          "name": "Set Record ID to -1",
+          "script": "(function execute() {\n    vaVars.record_id = \"-1\";\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "cf927562b3de408db8185ad9537a14d2": {
+          "stepType": "ReferenceChoicePrompt",
+          "name": "Question Choice",
+          "prompt": {
+            "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "mode": "query",
+            "value": ""
+          },
+          "optional": false,
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "42d8667a7d28429fa456ee7fd304247a",
+          "id": "cf927562b3de408db8185ad9537a14d2",
+          "mode": "external",
+          "script": "(function execute() {\n    var options = choices = [];\n    var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    if (quesJson.type == 7)\n        choices = [{ \"label\": gs.getMessageLang(\"Yes\", vaContext.getRequesterLang()), \"value\": \"yes\" }, { \"label\": gs.getMessageLang(\"No\", vaContext.getRequesterLang()), \"value\": \"no\" }];\n    else\n        choices = quesJson.options;\n\n    if (choices.length &gt; 0 &amp;&amp; quesJson.mandatory) {\n        if (!choices[0].value)\n            choices.shift();\n    }\n\n    options = choices;\n    return options;\n})()",
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": ""
+                  },
+                  {
+                    "text": "No records found"
+                  },
+                  {
+                    "text": ""
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "condition": {
+            "value": "(function execute() {\n    var options = choices = [];\n    var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    if (quesJson.type == 7)\n        choices = [{ \"label\": gs.getMessageLang(\"Yes\", vaContext.getRequesterLang()), \"value\": \"yes\" }, { \"label\": gs.getMessageLang(\"No\", vaContext.getRequesterLang()), \"value\": \"no\" }];\n    else\n        choices = quesJson.options;\n\n    if (choices.length &gt; 0 &amp;&amp; quesJson.mandatory) {\n        if (!choices[0].value)\n            choices.shift();\n    }\n\n    options = choices;\n    return options;\n})()",
+            "mode": "external_script"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "skippable": {
+            "mode": "script",
+            "value": "(function execute() {\n    var question = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    if (question.mandatory)\n        return false;\n    if (question.type === 3 &amp;&amp; question.value === '' &amp;&amp; question.options[0].value !== '') \n        return true;\n    if (question.type === 4 &amp;&amp; question.value === '')\n        return true;\n    return false;\n})();\n"
+          },
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "hasCardHeader": false,
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": "",
+          "isMultipleSelect": false
+        },
+        "ef3651d55035493ea8adc6c06bd8d24f": {
+          "id": "ef3651d55035493ea8adc6c06bd8d24f",
+          "stepType": "DateTimePrompt",
+          "name": "Question Date Time",
+          "prompt": {
+            "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "optional": false,
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "61788c93b7bc49dd9a5ddaadc67cb876",
+          "skippable": {
+            "mode": "script",
+            "value": "(function execute() {\n   return !JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].mandatory;\n})()\n"
+          },
+          "inputType": {
+            "format": "Text",
+            "script": ""
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": ""
+        },
+        "6e3cdde8114a4b209031e19cd17832db": {
+          "id": "6e3cdde8114a4b209031e19cd17832db",
+          "stepType": "TextOutput",
+          "name": "Question Label",
+          "value": [
+            {
+              "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+              "mode": "script"
+            }
+          ],
+          "applicability": {
+            "mode": "script",
+            "value": "(function execute() {\n    var question = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    if (question._internal_type == \"checkbox_container\" &amp;&amp; question.label.toUpperCase() == \"OPTIONS\"\n        &amp;&amp; Array.isArray(question._children) &amp;&amp; question._children.length == 1)\n        return false;\n    return true;\n})()\n"
+          },
+          "secure": false,
+          "requestFeedback": true
+        },
+        "4ed89e4fb93e4c5d84fd1d8bcad2a4fe": {
+          "id": "4ed89e4fb93e4c5d84fd1d8bcad2a4fe",
+          "stepType": "TextOutput",
+          "name": "Container Start Question",
+          "value": [
+            {
+              "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+              "mode": "script"
+            }
+          ],
+          "applicability": {
+            "mode": "script",
+            "value": "(function execute() {\n    var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    if (quesJson.display_title)\n        return true;\n})()\n"
+          },
+          "secure": false,
+          "requestFeedback": true
+        },
+        "f9b3f868f4a54c85bb85efb915858fb8": {
+          "stepType": "ReferenceChoicePrompt",
+          "name": "Question Requested For",
+          "prompt": {
+            "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "optional": false,
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "5a02f855f9584fc8ad57fc779ed10419",
+          "id": "f9b3f868f4a54c85bb85efb915858fb8",
+          "mode": "external",
+          "script": "(function execute() {\n    var options = [];\n    var index = parseInt(vaVars.index);\n    var limit = parseInt(vaVars.limit);\n    var count = 0;\n    var gr = new GlideRecordSecure('sys_user');\n    var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    gr.addEncodedQuery('nameLIKE'+ vaInputs.search_requested_for);\n    gr.addQuery(quesJson.qualifier);\n    gr.orderBy(gr.getDisplayName());\n    gr.chooseWindow(index, index + limit, true);\n    gr.query();\n\n    var count = gr.getRowCount();\n    vaVars.count = count;\n\n    while (gr.next()) {\n        options.push({\n            \"value\" : gr.getUniqueValue(),\n            \"label\" : gr.getDisplayValue()\n        });\n    }\n\n    if (index &gt; 0) \n        options.push({ 'value': 'prev', 'label': gs.getMessageLang('Show previous', vaContext.getRequesterLang())});\n    if (count &gt; index + limit)\n        options.push({ 'value': 'next', 'label': gs.getMessageLang('Show more', vaContext.getRequesterLang())});\n    \n    if (count &gt; 0) {\n        options.push({\n            'value' : 'search',\n            'label' : gs.getMessageLang('Someone else', vaContext.getRequesterLang())\n        });\n    }\n    return options;    \n})()\n",
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": ""
+                  },
+                  {
+                    "text": "I couldn't find a user with that name"
+                  },
+                  {
+                    "text": ""
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "condition": {
+            "value": "(function execute() {\n    var options = [];\n    var index = parseInt(vaVars.index);\n    var limit = parseInt(vaVars.limit);\n    var count = 0;\n    var gr = new GlideRecordSecure('sys_user');\n    var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    gr.addEncodedQuery('nameLIKE'+ vaInputs.search_requested_for);\n    gr.addQuery(quesJson.qualifier);\n    gr.orderBy(gr.getDisplayName());\n    gr.chooseWindow(index, index + limit, true);\n    gr.query();\n\n    var count = gr.getRowCount();\n    vaVars.count = count;\n\n    while (gr.next()) {\n        options.push({\n            \"value\" : gr.getUniqueValue(),\n            \"label\" : gr.getDisplayValue()\n        });\n    }\n\n    if (index &gt; 0) \n        options.push({ 'value': 'prev', 'label': gs.getMessageLang('Show previous', vaContext.getRequesterLang())});\n    if (count &gt; index + limit)\n        options.push({ 'value': 'next', 'label': gs.getMessageLang('Show more', vaContext.getRequesterLang())});\n    \n    if (count &gt; 0) {\n        options.push({\n            'value' : 'search',\n            'label' : gs.getMessageLang('Someone else', vaContext.getRequesterLang())\n        });\n    }\n    return options;    \n})()\n",
+            "mode": "external_script"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "hasCardHeader": false,
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": "",
+          "isMultipleSelect": false
+        },
+        "07d77fd351cd4a6089e6e1c857f5bc6f": {
+          "id": "07d77fd351cd4a6089e6e1c857f5bc6f",
+          "stepType": "TextPrompt",
+          "name": "Search Requested For",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": ""
+                  },
+                  {
+                    "text": "Who should I set it to? "
+                  },
+                  {
+                    "text": ""
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "optional": false,
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "7c5018bb937e48379c8747593ee7f905",
+          "skippable": {
+            "mode": "query",
+            "value": ""
+          },
+          "inputType": {
+            "format": "Text",
+            "script": ""
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": "",
+          "requestFeedback": true
+        },
+        "6c11cc8776d84273a7a3beabc48723d5": {
+          "id": "6c11cc8776d84273a7a3beabc48723d5",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "97374c78264b4017ae27622ca83fe515": {
+          "id": "97374c78264b4017ae27622ca83fe515",
+          "name": "Requested For Next Page",
+          "script": "(function execute() {\n    var count = parseInt(vaVars.count);\n    var index = parseInt(vaVars.index);\n    var limit = parseInt(vaVars.limit);\n    if ( index + limit &gt; count )\n        vaVars.index = 0;\n    else\n        vaVars.index = index + limit;\n})();",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "4aa932f4752e44aeac5cc0518dd9c066": {
+          "id": "4aa932f4752e44aeac5cc0518dd9c066",
+          "name": "Is Delegation Allowed",
+          "script": "(function execute() {\n    var item = new sn_sc.CatItem(JSON.parse(vaVars.itemJSON).sys_id);\n    vaVars.request_for = vaInputs.question_requested_for.getValue() + '';\n    vaVars.canView = item.isDelegationAllowed(vaVars.request_for);\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "1bd4c04ce99f4e8fb3c940b84d911108": {
+          "id": "1bd4c04ce99f4e8fb3c940b84d911108",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "8cb759a2d7164a01b793e24cda12468b": {
+          "id": "8cb759a2d7164a01b793e24cda12468b",
+          "name": "Requested For Previous Page",
+          "script": "(function execute() {\n    var index = parseInt(vaVars.index);\n    var limit = parseInt(vaVars.limit);\n    var c = index - limit;\n    if ( c &lt; 0 ) c = 0;\n    vaVars.index = c;\n})();",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "00f14244b78341709e4407b46776eff9": {
+          "id": "00f14244b78341709e4407b46776eff9",
+          "stepType": "BooleanPrompt",
+          "name": "Request For Another User",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": ""
+                  },
+                  {
+                    "text": "The selected user does not have access to this item. Do you want to request for  someone else?"
+                  },
+                  {
+                    "text": ""
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "optional": false,
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "fc59685d29934f1b8a4a9a3832b30289",
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "inputType": {
+            "format": "Text",
+            "script": ""
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": ""
+        },
+        "c560b0475bb34f3e82fecf4af3852e9b": {
+          "id": "c560b0475bb34f3e82fecf4af3852e9b",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "6331b8c6297c4a7bbabbf09871822845": {
+          "id": "6331b8c6297c4a7bbabbf09871822845",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "fda851e09c59406c9000dccda34939e5": {
+          "id": "fda851e09c59406c9000dccda34939e5",
+          "name": "Run OnChange Policies",
+          "script": "(function execute() {\n   vaVars.itemJSON = JSON.stringify(new sn_sc.CatalogConversationHelper().runChangePolicies(JSON.parse(vaVars.itemJSON)))\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "02a5232d84934108bbfb1ef92b879fa8": {
+          "id": "02a5232d84934108bbfb1ef92b879fa8",
+          "stepType": "TextPrompt",
+          "name": "Question Email",
+          "prompt": {
+            "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "mode": "script",
+            "value": "(function execute() {\n   return !JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].mandatory;\n})()\n"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "fab1bf8609594588ab6c868e1b8e594d",
+          "inputType": {
+            "format": "33513d135b1200101f254d3ba881c7d5",
+            "script": ""
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": "",
+          "requestFeedback": true
+        },
+        "eb87710ff8a1476080bb21f80e57b3af": {
+          "id": "eb87710ff8a1476080bb21f80e57b3af",
+          "stepType": "TextPrompt",
+          "name": "Question IP Address",
+          "prompt": {
+            "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "mode": "script",
+            "value": "(function execute() {\n   return !JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].mandatory;\n})()\n"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "eda878af9d4441ee92ca3be9fb2e597a",
+          "inputType": {
+            "format": "a860c5945b2200101f254d3ba881c7df",
+            "script": ""
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": "",
+          "requestFeedback": true
+        },
+        "c4ae158527f44e5bbdcaa0fd2aa740dc": {
+          "id": "c4ae158527f44e5bbdcaa0fd2aa740dc",
+          "stepType": "TextPrompt",
+          "name": "Question URL",
+          "prompt": {
+            "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "mode": "script",
+            "value": "(function execute() {\n   return !JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].mandatory;\n})()\n"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "31d43f086a7448f585cc30152755dd02",
+          "inputType": {
+            "format": "77d8b2935b9200101f254d3ba881c7b9",
+            "script": ""
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": "",
+          "requestFeedback": true
+        },
+        "b0d31864bd65445eb52068e43e3fb2b4": {
+          "id": "b0d31864bd65445eb52068e43e3fb2b4",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "ea97161dbe924742b9884bb17868d6b9": {
+          "id": "ea97161dbe924742b9884bb17868d6b9",
+          "stepType": "BooleanPrompt",
+          "name": "Add Attachment",
+          "prompt": {
+            "value": "(function execute() {\n    return gs.getMessageLang('Add attachment?', vaContext.getRequesterLang());\n})()\n",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "mode": "script",
+            "value": "(function execute() {\n    var item = JSON.parse(vaVars.itemJSON);\n    return !item.mandatory_attachment;\n})()\n"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "399e19a568f849f69c6a29ddc9fa55e4",
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": ""
+        },
+        "4412f5ddec1f4be6985a38e35dcfadd4": {
+          "id": "4412f5ddec1f4be6985a38e35dcfadd4",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "afb136f8061e48fbb9c82d2b9d524b0e": {
+          "id": "afb136f8061e48fbb9c82d2b9d524b0e",
+          "stepType": "FilePrompt",
+          "name": "Upload Attachment",
+          "prompt": {
+            "value": "(function execute() {\n    return gs.getMessageLang('Upload attachment', vaContext.getRequesterLang());\n})()\n",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "mode": "script",
+            "value": "(function execute() {\n    var addMore = false;\n    //when attachment is mandatory, to provide an option to skip add more \n    if (vaInputs.add_more &amp;&amp; vaInputs.add_more.getValue())\n        addMore = true;\n        \n    return !JSON.parse(vaVars.itemJSON).mandatory_attachment || addMore;\n})()"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "7225ee63aa954a44b4e919a388bdbc2a",
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": ""
+        },
+        "cf40a5328a934bfca157b18b2a368149": {
+          "id": "cf40a5328a934bfca157b18b2a368149",
+          "name": "Add Media Links for Form Attachment",
+          "script": "(function execute() {\n    if (!!vaVars.media_links_form_attachment)\n        vaVars.media_links_form_attachment = vaVars.media_links_form_attachment + ',' + vaInputs.upload_attachment.getValue();\n    else\n        vaVars.media_links_form_attachment = vaInputs.upload_attachment.getValue();\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "061eb580e4284cae98686728c0d98754": {
+          "id": "061eb580e4284cae98686728c0d98754",
+          "stepType": "BooleanPrompt",
+          "name": "Add More",
+          "prompt": {
+            "value": "(function execute() {\n    return gs.getMessageLang('Add more?', vaContext.getRequesterLang());\n})()\n",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "a8e8f285628a405188317c781227dbb6",
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": ""
+        },
+        "8afcd5a77c2a4509a3b7f36fd5940044": {
+          "id": "8afcd5a77c2a4509a3b7f36fd5940044",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "e0501b92da5847b3a3cab2c04caba5e3": {
+          "id": "e0501b92da5847b3a3cab2c04caba5e3",
+          "stepType": "FilePrompt",
+          "name": "Question Attachment",
+          "prompt": {
+            "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "mode": "script",
+            "value": "(function execute() {\n   return !JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].mandatory;\n})()\n"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "entity": "",
+          "variableId": "3b57536c82b8469aa467550c31cd2e9f",
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": ""
+        },
+        "08a3129b9bca4e2ca8363f42cd15523b": {
+          "id": "08a3129b9bca4e2ca8363f42cd15523b",
+          "name": "Validate Attachment",
+          "script": "(function execute() {\n    vaVars.validation_message = \"\";\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    var quesJson = itemJson.variables[vaVars.qIndex];\n    var vaUtils = new global.VAUtils();\n    var arr = vaInputs.question_attachment.getValue().split('/');\n    var mediaId = arr[arr.length - 1];\n    var gr = new GlideRecord('sys_cs_media');\n    gr.addQuery('media_id', mediaId);\n    gr.query();\n    if (gr.next()) {\n        var attachmentId = gr.getValue('sys_attachment_id');\n        var attachRef = new GlideRecord('sys_attachment');\n        if (attachRef.get(attachmentId)) {\n            var file = {\n                name: attachRef.getValue('file_name'),\n                size: attachRef.getValue('size_bytes')\n            };\n            var allowedExtensions = new Array();\n            if (quesJson.allow_extension)\n               allowedExtensions = quesJson.allow_extension.split(';');\n            var field = {\n                allowedExtensions: allowedExtensions,\n                allowedFileSize: quesJson.max_file_size\n            };\n            var result = vaUtils.validateAttachment(file, field);\n            if (result.type == 'success') {\n                quesJson.value = attachmentId;\n                vaVars.itemJSON = JSON.stringify(itemJson);\n                vaInputs.question_attachment.setValue('');\n            } else\n                vaVars.validation_message = result.message;\n        } else \n            vaVars.validation_message = gs.getMessageLang('Failed to upload the attachment', vaContext.getRequesterLang());\n    } else \n        vaVars.validation_message = gs.getMessageLang('Failed to upload the attachment', vaContext.getRequesterLang());\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "question_attachmentISNOTEMPTY",
+            "mode": "query"
+          }
+        },
+        "e63724c9f0644c2eb29f4b51618963c7": {
+          "id": "e63724c9f0644c2eb29f4b51618963c7",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "f4d8640f9b304943b022ce615426ee82": {
+          "id": "f4d8640f9b304943b022ce615426ee82",
+          "stepType": "ScriptOutput",
+          "name": "Validation Message",
+          "output_type": "single_part",
+          "script": "(function execute() {\n     var singleOutMsg = new sn_cs.SinglePartOutMsg();\n       singleOutMsg.setTextPart(gs.getMessageLang('{0}. Answer the question again', vaContext.getRequesterLang(), [vaVars.validation_message]));\n       vaVars.validation_message = \"\";\n       return singleOutMsg;\n})()\n",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "46d03742e31a4e79b2d67a9f3355a670": {
+          "id": "46d03742e31a4e79b2d67a9f3355a670",
+          "stepType": "Decision",
+          "name": "Is Record Producer"
+        },
+        "76a2ab36ca3c482695ec75ea31ce9409": {
+          "id": "76a2ab36ca3c482695ec75ea31ce9409",
+          "stepType": "Decision",
+          "name": "Execute Contextual Search"
+        },
+        "370c98b7ee1c4fea80378d16b6ce8b12": {
+          "id": "370c98b7ee1c4fea80378d16b6ce8b12",
+          "name": "Get Search Variable And Context",
+          "script": "(function execute() {\n    var contextualSearch = new global.VAGlobalContextualSearchUtil();\n    if(gs.nil(vaVars.contextualSearchVariable)) {\n        var searchConfig = contextualSearch.getContextualSearchVariableAndContext(vaInputs.catalog_item_id);\n        vaVars.contextualSearchVariable = searchConfig.searchVariable;\n        vaVars.contextualSearchContext = searchConfig.context;\n    }\n    return;\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "mode": "query",
+            "value": ""
+          }
+        },
+        "341f90c3e0944540937f7c475d2394b6": {
+          "id": "341f90c3e0944540937f7c475d2394b6",
+          "stepType": "Decision",
+          "name": "Contextual Search Variable ?"
+        },
+        "f5781ceee0bd497fb31b163066251d61": {
+          "id": "f5781ceee0bd497fb31b163066251d61",
+          "name": "Contextual Search",
+          "script": "(function execute() {\n    var contextualSearch = new global.VAGlobalContextualSearchUtil();\n    var response = contextualSearch.search(\n        vaVars.contextualSearchContext, vaInputs.question_text.getValue(), ''\n    );\n    var success = contextualSearch.processSearchResponse(response);\n    if (!success) {\n        return;\n    }  \n    var relevantSearchResults = contextualSearch.processGeneralResults(response, 20, -2, vaSystem);\n    vaVars.contextualSearchResultCount = relevantSearchResults.length;\n    vaVars.contextualSearchResultJsonString = JSON.stringify(relevantSearchResults);\n    vaVars.contextualSearchIndex = 0;\n    return;\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "c0aa3a467b7849b8960612b49d3f135b": {
+          "id": "c0aa3a467b7849b8960612b49d3f135b",
+          "stepType": "Decision",
+          "name": "Did the search return results ?"
+        },
+        "a4bcf2b6b829422681877c8cfe4127ee": {
+          "id": "a4bcf2b6b829422681877c8cfe4127ee",
+          "stepType": "LinkOutput",
+          "name": "Display multi-link",
+          "url": {
+            "mode": "simple",
+            "value": ""
+          },
+          "label": {
+            "mode": "simple",
+            "value": ""
+          },
+          "header": {
+            "mode": "simple",
+            "value": ""
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "linkType": "multiple",
+          "introMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": ""
+                  },
+                  {
+                    "text": "I found some information that might help you:"
+                  },
+                  {
+                    "text": ""
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "listOfLinks": "(function execute(header) {\n\tvar contextualSearch = new global.VAGlobalContextualSearchUtil();\n\tvar variables = {\n\t\tlimit: vaVars.contextualSearchResultLimit,\n\t\tindex: vaVars.contextualSearchIndex,\n\t\tsearch_result_json_string: vaVars.contextualSearchResultJsonString,\n\t\tportal: ''\n\t}\n\tvar groupedLinksOutMsg = contextualSearch.getLinks(header, variables, vaSystem, vaContext);\n\treturn groupedLinksOutMsg;\n})(header)\n"
+        },
+        "30e49d234a0a41a3a669a72e763d91ad": {
+          "id": "30e49d234a0a41a3a669a72e763d91ad",
+          "stepType": "Decision",
+          "name": "Did Articles Help ?"
+        },
+        "c7293cb1079f49f394fbd3d4d755cec8": {
+          "id": "c7293cb1079f49f394fbd3d4d755cec8",
+          "stepType": "BooleanPrompt",
+          "name": "Did Articles Help",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": ""
+                  },
+                  {
+                    "text": "Did any of this information resolve your issue?"
+                  },
+                  {
+                    "text": ""
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "91799a9e95b24ba7afa5f315087fa092",
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": ""
+        },
+        "5f040df95dbf41f0a1736be574c66124": {
+          "id": "5f040df95dbf41f0a1736be574c66124",
+          "stepType": "Decision",
+          "name": "Confirmation Required ?"
+        },
+        "25ca6917b8be426e8e07ecbe3e23f573": {
+          "id": "25ca6917b8be426e8e07ecbe3e23f573",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "e0c295cbdc48419c85b1cd421a787733": {
+          "id": "e0c295cbdc48419c85b1cd421a787733",
+          "stepType": "TextOutput",
+          "name": "Catalog Builder Preview",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "Preview successful"
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple"
+            }
+          ],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "requestFeedback": true
+        },
+        "e3451f94af3d4a628885889b578d3f6d": {
+          "id": "e3451f94af3d4a628885889b578d3f6d",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "f4e0c50270da45318941c999b46adcd3": {
+          "id": "f4e0c50270da45318941c999b46adcd3",
+          "stepType": "TextOutput",
+          "name": "Catalog Builder Preview Message",
+          "secure": false,
+          "value": [
+            {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": "Since this was a preview, the request was not submitted"
+                    }
+                  ]
+                }
+              ],
+              "mode": "simple"
+            }
+          ],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "requestFeedback": true
+        },
+        "487a9e1cbdeb47d8a7f3397a555054db": {
+          "id": "487a9e1cbdeb47d8a7f3397a555054db",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "29da6a654fc44d65b4ab60887cfd7afb": {
+          "id": "29da6a654fc44d65b4ab60887cfd7afb",
+          "stepType": "ScriptOutput",
+          "name": "Question Rich Text Label",
+          "output_type": "single_part",
+          "script": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "126d56ed504c4feba7566007d67afd9d": {
+          "id": "126d56ed504c4feba7566007d67afd9d",
+          "stepType": "TextOutput",
+          "name": "Default Value Acknowledgement ",
+          "secure": false,
+          "value": [
+            {
+              "value": "(function execute() {\n    var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    var renderedValue = quesJson.display_value ? quesJson.display_value : quesJson.value;\n    if (quesJson.type == 7) {\n        renderedValue = quesJson.value == \"true\" ? \"Yes\" : \"No\";\n    }\n    return gs.getMessageLang(\"&lt;b&gt;{0}&lt;/b&gt; was selected as the value for &lt;b&gt;{1}&lt;/b&gt;\", vaContext.getRequesterLang(), [renderedValue, quesJson.label])\n})()\n",
+              "mode": "script"
+            }
+          ],
+          "applicability": {
+            "mode": "script",
+            "value": "(function execute() {\n    var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    if (quesJson.type == 7)\n        return quesJson.has_default_value;\n    return quesJson.value ? true : false;\n})()\n"
+          },
+          "requestFeedback": true
+        },
+        "1454753402904126922993fa48cd933c": {
+          "id": "1454753402904126922993fa48cd933c",
+          "stepType": "BooleanPrompt",
+          "name": "Proceed with Default",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Do you want to proceed with this value?"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "mode": "script",
+            "value": "(function execute() {\n    var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    if (quesJson.type == 7)\n        return quesJson.has_default_value;\n    return quesJson.value ? true : false;\n})()\n"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "05f83b627d4f49f8bf5a05553378d657",
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": ""
+        },
+        "5be3dc6f8ca34dd183e13e91ea34c9bd": {
+          "id": "5be3dc6f8ca34dd183e13e91ea34c9bd",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "1da905f00b5e40bc80ec460b772f2b6a": {
+          "id": "1da905f00b5e40bc80ec460b772f2b6a",
+          "stepType": "Decision",
+          "name": "Show end state card?"
+        },
+        "28af889cf2c74c33be4b3ff314644135": {
+          "id": "28af889cf2c74c33be4b3ff314644135",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "7450595f413545159d562de44e4f0d0e": {
+          "id": "7450595f413545159d562de44e4f0d0e",
+          "stepType": "Decision",
+          "name": "Messaging Channel"
+        },
+        "0270a40e70154b39bfefd1f7cb8e59b1": {
+          "stepType": "ReferenceChoicePrompt",
+          "name": "Question Choice Other Channels",
+          "prompt": {
+            "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "mode": "script",
+            "value": "(function execute() {\n    var question = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    if (question.mandatory)\n        return false;\n    if (question.type === 4 &amp;&amp; question.value === '')\n        return true;\n    if (question.type === 3 &amp;&amp; question.value === '' &amp;&amp; question.options[0].value !== '')\n        return true;\n    return false;\n})();\n"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "d7f460bbd15e45b8b2269d36a113628b",
+          "id": "0270a40e70154b39bfefd1f7cb8e59b1",
+          "mode": "external",
+          "script": "(function execute() {\n    var index = parseInt(vaVars.index);\n    var limit = parseInt(vaVars.limit);\n    var options = choices = [];\n    var count = 0;\n    var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n\n    if (quesJson.type == 7)\n        choices = [{ \"label\": gs.getMessageLang(\"Yes\", vaContext.getRequesterLang()), \"value\": \"yes\" }, { \"label\": gs.getMessageLang(\"No\", vaContext.getRequesterLang()), \"value\": \"no\" }];\n    else\n        choices = quesJson.options;\n\n    if (choices.length &gt; 0 &amp;&amp; quesJson.mandatory) {\n        if (!choices[0].value)\n            choices.shift();\n    }\n    \n    count = choices.length;\n    vaVars.count = count;\n    options = choices.splice(index, limit);\n\n    if (index &gt; 0) \n        options.push({ 'value': 'prev', 'label': gs.getMessageLang('Show previous', vaContext.getRequesterLang())});\n\n    if (count &gt; index + limit)\n        options.push({ 'value': 'next', 'label': gs.getMessageLang('Show more', vaContext.getRequesterLang())});\n    \n    return options;    \n})()",
+          "metadataScript": "",
+          "cardData": {},
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "No records found"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "condition": {
+            "value": "(function execute() {\n    var index = parseInt(vaVars.index);\n    var limit = parseInt(vaVars.limit);\n    var options = choices = [];\n    var count = 0;\n    var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n\n    if (quesJson.type == 7)\n        choices = [{ \"label\": gs.getMessageLang(\"Yes\", vaContext.getRequesterLang()), \"value\": \"yes\" }, { \"label\": gs.getMessageLang(\"No\", vaContext.getRequesterLang()), \"value\": \"no\" }];\n    else\n        choices = quesJson.options;\n\n    if (choices.length &gt; 0 &amp;&amp; quesJson.mandatory) {\n        if (!choices[0].value)\n            choices.shift();\n    }\n    \n    count = choices.length;\n    vaVars.count = count;\n    options = choices.splice(index, limit);\n\n    if (index &gt; 0) \n        options.push({ 'value': 'prev', 'label': gs.getMessageLang('Show previous', vaContext.getRequesterLang())});\n\n    if (count &gt; index + limit)\n        options.push({ 'value': 'next', 'label': gs.getMessageLang('Show more', vaContext.getRequesterLang())});\n    \n    return options;    \n})()",
+            "mode": "external_script"
+          },
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": "",
+          "isMultipleSelect": false
+        },
+        "a77154b1fbfc4aa2a4d7af7c5911f72e": {
+          "id": "a77154b1fbfc4aa2a4d7af7c5911f72e",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "c522b46f211b4594aceecdb38b60ffe3": {
+          "id": "c522b46f211b4594aceecdb38b60ffe3",
+          "name": "Question Choice Prev Page",
+          "script": "(function execute() {\n    var index = parseInt(vaVars.index);\n    var limit = parseInt(vaVars.limit);\n    var c = index - limit;\n    if ( c &lt; 0 ) c = 0;\n    vaVars.index = c;\n})();",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "b76b801e95134eef929707a69b4bb264": {
+          "id": "b76b801e95134eef929707a69b4bb264",
+          "name": "Question Choice Next Page",
+          "script": "(function execute() {\n    var count = parseInt(vaVars.count);\n    var index = parseInt(vaVars.index);\n    var limit = parseInt(vaVars.limit);\n    if ( index + limit &gt; count )\n        vaVars.index = 0;\n    else\n        vaVars.index = index + limit;\n})();",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "1f0ca38bf5734bbd9b65850146385b67": {
+          "id": "1f0ca38bf5734bbd9b65850146385b67",
+          "name": "Set Question Choice Value",
+          "script": "(function execute() {\n    if(vaInputs.question_choice_other_channels) {\n        vaInputs.question_choice = vaInputs.question_choice_other_channels;\n        vaInputs.question_choice_other_channels = \"\";\n    }\n})()",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "969811e3668b4aa09e949479e58394a3": {
+          "id": "969811e3668b4aa09e949479e58394a3",
+          "stepType": "Decision",
+          "name": "Messaging Channel"
+        },
+        "f62606ed1779447ab116ff33d1665363": {
+          "id": "f62606ed1779447ab116ff33d1665363",
+          "stepType": "TextPrompt",
+          "name": "Search Reference",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Enter a value to search"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaInputs.question_reference_other_channels;\n})()\n"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "0f59fa11f10440a3b87813bd59631a47",
+          "inputType": {
+            "format": "Text",
+            "script": ""
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": "",
+          "requestFeedback": true
+        },
+        "00ceea5c256d4b1c95de8cfac697ee7e": {
+          "stepType": "ReferenceChoicePrompt",
+          "name": "Question Reference Other Channels",
+          "prompt": {
+            "value": "(function execute() {\n   var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n   var response = quesJson.label;\n   var json = new JSON();\n   var infoKeys = json.getKeys(quesJson.field_info_messages);\n   var warnKeys = json.getKeys(quesJson.field_warn_messages);\n   var errKeys = json.getKeys(quesJson.field_error_messages);\n   \n   for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n   }\n   for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n   }\n   for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n   }\n   return response;\n})()",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "mode": "script",
+            "value": "(function execute() {\n   return !JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].mandatory;\n})()"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "965a4f9776964357a4bd78ba8273c1d7",
+          "id": "00ceea5c256d4b1c95de8cfac697ee7e",
+          "mode": "external",
+          "script": "(function execute() {\n    var options = [];\n    var index = parseInt(vaVars.index);\n    var limit = parseInt(vaVars.limit);\n    var count = 0;\n\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    var variable = itemJson.variables[vaVars.qIndex];\n    var gr = new GlideRecordSecure(variable.reference);\n    var displayColumn = gr.getDisplayName();\n   \n    gr.addEncodedQuery(displayColumn + 'LIKE' + vaInputs.search_reference.getValue());\n    gr.addQuery(variable.qualifier);\n    if (variable.ref_ac_order_by)\n        gr.orderBy(variable.ref_ac_order_by);\n    else\n        gr.orderBy(displayColumn);\n    \n    gr.chooseWindow(index, index + limit, true);\n    gr.query();\n\n    var count = gr.getRowCount();\n    vaVars.count = count;\n\n    while (gr.next()) {\n        options.push({\n            \"value\" : gr.getUniqueValue(),\n            \"label\" : gr.getDisplayValue()\n        });\n    }\n\n    if (index &gt; 0) \n        options.push({ 'value': 'prev', 'label': gs.getMessageLang('Show previous', vaContext.getRequesterLang())});\n    if (count &gt; index + limit)\n        options.push({ 'value': 'next', 'label': gs.getMessageLang('Show more', vaContext.getRequesterLang())});\n\n    if (count &gt; 0) {\n        vaVars.no_records_found = \"false\"\n        options.push({\n            'value' : 'search',\n            'label' : gs.getMessageLang('Search', vaContext.getRequesterLang())\n        });\n    }\n    else\n        vaVars.no_records_found = \"true\";\n    \n    return options;    \n})()\n",
+          "metadataScript": "",
+          "cardData": {},
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "No records found"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "condition": {
+            "value": "(function execute() {\n    var options = [];\n    var index = parseInt(vaVars.index);\n    var limit = parseInt(vaVars.limit);\n    var count = 0;\n\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    var variable = itemJson.variables[vaVars.qIndex];\n    var gr = new GlideRecordSecure(variable.reference);\n    var displayColumn = gr.getDisplayName();\n   \n    gr.addEncodedQuery(displayColumn + 'LIKE' + vaInputs.search_reference.getValue());\n    gr.addQuery(variable.qualifier);\n    if (variable.ref_ac_order_by)\n        gr.orderBy(variable.ref_ac_order_by);\n    else\n        gr.orderBy(displayColumn);\n    \n    gr.chooseWindow(index, index + limit, true);\n    gr.query();\n\n    var count = gr.getRowCount();\n    vaVars.count = count;\n\n    while (gr.next()) {\n        options.push({\n            \"value\" : gr.getUniqueValue(),\n            \"label\" : gr.getDisplayValue()\n        });\n    }\n\n    if (index &gt; 0) \n        options.push({ 'value': 'prev', 'label': gs.getMessageLang('Show previous', vaContext.getRequesterLang())});\n    if (count &gt; index + limit)\n        options.push({ 'value': 'next', 'label': gs.getMessageLang('Show more', vaContext.getRequesterLang())});\n\n    if (count &gt; 0) {\n        vaVars.no_records_found = \"false\"\n        options.push({\n            'value' : 'search',\n            'label' : gs.getMessageLang('Search', vaContext.getRequesterLang())\n        });\n    }\n    else\n        vaVars.no_records_found = \"true\";\n    \n    return options;    \n})()\n",
+            "mode": "external_script"
+          },
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "detailDescription": "",
+          "isMultipleSelect": false
+        },
+        "b95d3039249345b19e62dd023aa24164": {
+          "id": "b95d3039249345b19e62dd023aa24164",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "e65737d72d5b4e57bdbc89fcf6d7e3e4": {
+          "id": "e65737d72d5b4e57bdbc89fcf6d7e3e4",
+          "name": "Question Reference Prev Page",
+          "script": "(function execute() {\n    var index = parseInt(vaVars.index);\n    var limit = parseInt(vaVars.limit);\n    var c = index - limit;\n    if ( c &lt; 0 ) c = 0;\n    vaVars.index = c;\n})();",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "f05bdc49e33f49308a7f1ff5cfc8fa42": {
+          "id": "f05bdc49e33f49308a7f1ff5cfc8fa42",
+          "name": "Question Reference Next Page",
+          "script": "(function execute() {\n    var count = parseInt(vaVars.count);\n    var index = parseInt(vaVars.index);\n    var limit = parseInt(vaVars.limit);\n    if ( index + limit &gt; count )\n        vaVars.index = 0;\n    else\n        vaVars.index = index + limit;\n})();",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "8ae24505e57747c582169b40b2ae69df": {
+          "id": "8ae24505e57747c582169b40b2ae69df",
+          "name": "Set Question Reference Value",
+          "script": "(function execute() {\n    if(vaInputs.question_reference_other_channels) {\n        vaInputs.question_reference = vaInputs.question_reference_other_channels;\n        vaInputs.question_reference_other_channels = \"\";\n    }\n})()",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "741ae5c0a9404da3859ed9e74d951f7d": {
+          "id": "741ae5c0a9404da3859ed9e74d951f7d",
+          "stepType": "ReusableTopic",
+          "name": "End state card",
+          "fields": [],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "reusableTopicChoice": "End state card for Catalog Request",
+          "reusableTopicId": "0b01391550d30110fa9b861f7d83d7f6",
+          "inputs": {
+            "record_id": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaVars.record_id}}",
+                        "displayValue": "Script Variables➛record_id"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            },
+            "record_table": {
+              "value": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "text": ""
+                    },
+                    {
+                      "type": "datapill",
+                      "dataPill": {
+                        "value": "{{vaVars.record_table}}",
+                        "displayValue": "Script Variables➛record_table"
+                      },
+                      "children": [
+                        {
+                          "text": ""
+                        }
+                      ]
+                    },
+                    {
+                      "text": ""
+                    }
+                  ]
+                }
+              ],
+              "mode": "string",
+              "type": "String"
+            }
+          },
+          "variableIds": [],
+          "outputs": [],
+          "outdatedNote": false,
+          "loading": false,
+          "useTemplateTopic": false
+        },
+        "52668753c54c4c3093d56bdc31ec8ca5": {
+          "id": "52668753c54c4c3093d56bdc31ec8ca5",
+          "stepType": "Decision",
+          "name": "Catalog item validity check"
+        },
+        "423c10d2faf8457f85e36f977baab657": {
+          "id": "423c10d2faf8457f85e36f977baab657",
+          "name": "Validate Catalog Item",
+          "script": "(function execute() {\n   var catItemID = vaInputs.catalog_item_id.getValue();\n   var catItem = GlideappCatalogItem.get(catItemID);\n   if (catItem == null || !(vaContext.catalog_builder_preview == 'true' || catItem.canView())) {\n       vaVars.isValidCatItem = false;\n       return;\n   }\n   vaVars.isValidCatItem = true;\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "f23ca9a48df54707b19ba6900ec853c6": {
+          "id": "f23ca9a48df54707b19ba6900ec853c6",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "57fd356114a64824b39a80f5ee817efb": {
+          "id": "57fd356114a64824b39a80f5ee817efb",
+          "stepType": "BooleanPrompt",
+          "name": "Change Response",
+          "prompt": {
+            "value": "(function execute() {\n    var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    var response = quesJson.label;\n    var json = new JSON();\n    var infoKeys = json.getKeys(quesJson.field_info_messages);\n    var warnKeys = json.getKeys(quesJson.field_warn_messages);\n    var errKeys =  json.getKeys(quesJson.field_error_messages);\n\n    for (var j = infoKeys.length - 1; j &gt;= 0; j--) {\n      response +=  \"\\n\" + gs.getMessageLang(\"Info\", vaContext.getRequesterLang()) + \": \" + quesJson.field_info_messages[infoKeys[j]];\n    }\n    for (j = warnKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Warning\", vaContext.getRequesterLang()) + \": \" + quesJson.field_warn_messages[warnKeys[j]];\n    }\n    for (j = errKeys.length - 1; j &gt;= 0; j--) {\n      response += \"\\n\" + gs.getMessageLang(\"Error\", vaContext.getRequesterLang()) + \": \" + quesJson.field_error_messages[errKeys[j]];\n    }\n    response += \"\\n\" + gs.getMessageLang(\"Would you like to change your response?\", vaContext.getRequesterLang());\n    return response;\n})()\n",
+            "mode": "script"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "mode": "query",
+            "value": ""
+          },
+          "skippable": {
+            "mode": "query",
+            "value": ""
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false,
+          "variableId": "313d3e0c77e1487cbf65de249ff1a082",
+          "detailDescription": ""
+        },
+        "44f5c39461c24896aa9f5683cceb8008": {
+          "id": "44f5c39461c24896aa9f5683cceb8008",
+          "stepType": "Decision",
+          "name": "Decision"
+        },
+        "2f7816ec6c094ce687fbbaa6856ad4e2": {
+          "id": "2f7816ec6c094ce687fbbaa6856ad4e2",
+          "name": "Decrement qIndex and clear value",
+          "script": "(function execute() {\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    itemJson.variables[vaVars.qIndex].value = \"\";\n    itemJson.variables[vaVars.qIndex].field_info_messages = {};\n    itemJson.variables[vaVars.qIndex].field_warn_messages = {};\n    itemJson.variables[vaVars.qIndex].field_error_messages = {};\n    vaVars.itemJSON = JSON.stringify(itemJson);\n    var qIndex = vaVars.qIndex;\n    vaVars.qIndex = --qIndex;\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        }
+      },
+      "edges": [
+        {
+          "id": "ac1fe68f48a64c099aed3b876a53e201",
+          "edgeType": "Edge",
+          "source": "cf927562b3de408db8185ad9537a14d2",
+          "target": "1f0ca38bf5734bbd9b65850146385b67",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "ae8def145cc34eec8eab750aadd16bbf",
+          "edgeType": "Branch",
+          "source": "7450595f413545159d562de44e4f0d0e",
+          "target": "cf927562b3de408db8185ad9537a14d2",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaContext.deviceType === \"mweb\";\n})()\n"
+          },
+          "label": "Mobile/Web Client"
+        },
+        {
+          "id": "0c0a1ff90dda471a846c3a0c82a85c35",
+          "edgeType": "Branch",
+          "source": "44f5c39461c24896aa9f5683cceb8008",
+          "target": "581cfa3a32bc4121a49d644a0c2c6658",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.change_response=false",
+            "mode": "query"
+          },
+          "label": "false",
+          "fromNode": "- Decision",
+          "toNode": "581cfa3a32bc4121a49d644a0c2c6658",
+          "toEdge": "0c0a1ff90dda471a846c3a0c82a85c35",
+          "addNode": {},
+          "nodeEntries": {}
+        },
+        {
+          "id": "166e2234a7104c44aa6129a4019770b5",
+          "edgeType": "Edge",
+          "source": "741ae5c0a9404da3859ed9e74d951f7d",
+          "target": "43ce9c239d754a489c4e86af697c5538",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "e5db6cdc1d274d84a5b36fa72cf2aefe",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "07d77fd351cd4a6089e6e1c857f5bc6f",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    if (JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type === 31)\n        return true;\n})()\n"
+          },
+          "label": "Question Requested For"
+        },
+        {
+          "id": "8c0efaf659ae42f18fe5463e6e954e55",
+          "edgeType": "Edge",
+          "source": "8fb89065d150429487db975b1272593f",
+          "target": "1da905f00b5e40bc80ec460b772f2b6a",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "6a282e2a54644d78ab61b3798c6c05a5",
+          "edgeType": "Edge",
+          "source": "e0501b92da5847b3a3cab2c04caba5e3",
+          "target": "08a3129b9bca4e2ca8363f42cd15523b",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "d1d96b628af344dcaf18248a30041098",
+          "edgeType": "Edge",
+          "source": "cf40a5328a934bfca157b18b2a368149",
+          "target": "061eb580e4284cae98686728c0d98754",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "373b4d9c272b422fbd0ac4ff539f4dcc",
+          "edgeType": "Branch",
+          "source": "6c11cc8776d84273a7a3beabc48723d5",
+          "target": "97374c78264b4017ae27622ca83fe515",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaInputs.question_requested_for.getValue() === 'next';\n})()\n"
+          },
+          "label": "Requested For Next"
+        },
+        {
+          "id": "cea8ced8fbd54ef597884d43db86fb6f",
+          "edgeType": "Branch",
+          "source": "7752c1440f114277be2ae841750f5585",
+          "target": "f7d41b80c7764dd1b1b9dda3acc23754",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    if (itemJson.sys_class_name !== 'sc_cat_item_producer')\n        return true;\nreturn false;\n})()\n"
+          },
+          "label": "Catalog Item"
+        },
+        {
+          "id": "b9820ae2515f46a09069ac398149aeb3",
+          "edgeType": "Edge",
+          "source": "d12b5d39500946759c86e9e81a8cd6bf",
+          "target": "bc6e0a39cbab451bbdaaba62df33c5ed",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "6ebe808939424389b1575284ac2d90a6",
+          "edgeType": "Edge",
+          "source": "bc6e0a39cbab451bbdaaba62df33c5ed",
+          "target": "7b682095e5e4412db06503744afd467c",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "0b58166746f144a6ae4a249f3966d28b",
+          "edgeType": "Branch",
+          "source": "7b682095e5e4412db06503744afd467c",
+          "target": "43ce9c239d754a489c4e86af697c5538",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "proceed=false",
+            "mode": "query"
+          },
+          "label": "No"
+        },
+        {
+          "id": "61cb4c2349584b5981ca7238c91d134b",
+          "edgeType": "Branch",
+          "source": "7b682095e5e4412db06503744afd467c",
+          "target": "d0437f34d26b444db33f34c1a27ac180",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "proceed=true",
+            "mode": "query"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "2d012471ef824fa090be6f782a461308",
+          "edgeType": "Branch",
+          "source": "d0437f34d26b444db33f34c1a27ac180",
+          "target": "1b48cc688f4c41e5a22d0489342b7223",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n   return JSON.parse(vaVars.itemJSON).va_support;\n})()"
+          },
+          "label": "Has VA Support"
+        },
+        {
+          "id": "cdaca1789aeb46dd8c127eb6dcb69c97",
+          "edgeType": "Branch",
+          "source": "1b48cc688f4c41e5a22d0489342b7223",
+          "target": "581cfa3a32bc4121a49d644a0c2c6658",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    var qIndex = parseInt(vaVars.qIndex);\n    //qIndex is -1 initially, we reset this before search again step \n    do{\n        qIndex++;\n        var question = itemJson.variables[qIndex];\n    }\n    while(question &amp;&amp; (!question.visible || question.readonly || question.sys_readonly));\n\n    if (question) {\n       //There are variables that we can show\n        return false;\n    }\n    //No variables that we can show\n    return true;\n})()\n"
+          },
+          "label": "Item with no variables"
+        },
+        {
+          "id": "e73ce1c8f6b34e78b2e67f9e626a3c52",
+          "edgeType": "Branch",
+          "source": "1b48cc688f4c41e5a22d0489342b7223",
+          "target": "071d89e4cfc1485a8e5d1d3dc20446da",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    var qIndex = parseInt(vaVars.qIndex);\n    //qIndex is -1 initially, we reset this before search again step \n\n    do{\n        qIndex++;\n        var question = itemJson.variables[qIndex];\n    }\n    while(question &amp;&amp; (!question.visible || question.readonly || question.sys_readonly));\n\n    if (question) {\n       //There are variables that we can show\n        return true;\n    }\n    //No variables  that we can show\n    return false;\n})()\n"
+          },
+          "label": "Item with variables"
+        },
+        {
+          "id": "ef0057a590b04631aa5b529b7447488d",
+          "edgeType": "Edge",
+          "source": "071d89e4cfc1485a8e5d1d3dc20446da",
+          "target": "581cfa3a32bc4121a49d644a0c2c6658",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "eba03616444642259f7109ac431716a9",
+          "edgeType": "Branch",
+          "source": "7752c1440f114277be2ae841750f5585",
+          "target": "0bbee88923544b5d864a7ebfa5aa7b1d",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    if (itemJson.sys_class_name === 'sc_cat_item_producer')\n        return true;\nreturn false;\n})()\n"
+          },
+          "label": "Record Producer"
+        },
+        {
+          "id": "4efb1b9f973544a482c31604bcfc92d9",
+          "edgeType": "Edge",
+          "source": "0bbee88923544b5d864a7ebfa5aa7b1d",
+          "target": "370d7a1a97c54f938615de810aeb4465",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "f855cd5cabb54e808c037b989492c0c5",
+          "edgeType": "Branch",
+          "source": "370d7a1a97c54f938615de810aeb4465",
+          "target": "43ce9c239d754a489c4e86af697c5538",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "submit_producer=",
+            "mode": "query"
+          },
+          "label": "Don't Submit"
+        },
+        {
+          "id": "f1193ff68bcd47ca8736c25aa5d5457b",
+          "edgeType": "Edge",
+          "source": "f7d41b80c7764dd1b1b9dda3acc23754",
+          "target": "015876b57058499b89fb0f0b0e0ed843",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "8a286cbe41fe4692b97299ec609c7d07",
+          "edgeType": "Branch",
+          "source": "015876b57058499b89fb0f0b0e0ed843",
+          "target": "43ce9c239d754a489c4e86af697c5538",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "order_item=",
+            "mode": "query"
+          },
+          "label": "Don't Order"
+        },
+        {
+          "id": "0c802f14d7774a4fbe3b2ae99d0d9394",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "9e6e235f722149a58b678031d642cc77",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type === 9;\n})()\n"
+          },
+          "label": "Date Question"
+        },
+        {
+          "id": "0bc27d382f6347cb91aad4316795e052",
+          "edgeType": "Edge",
+          "source": "9e6e235f722149a58b678031d642cc77",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "91463207cd79427aa8482894aefaa41e",
+          "edgeType": "Edge",
+          "source": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "target": "eaeb64a0932f48ae931dc9ae538b1a44",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "063360c5248d4710b7203ba6a434759e",
+          "edgeType": "Branch",
+          "source": "eaeb64a0932f48ae931dc9ae538b1a44",
+          "target": "241a800b7cb04587be59f51d05e97adb",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaVars.validation_message.length !== 0;\n})()\n"
+          },
+          "label": "Repeat Question"
+        },
+        {
+          "id": "dc3f45ed6a4a41e8a13291e062d42d08",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "249d9e389a31425699f016421bf1bb16",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var type = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type;\n    return type === 2 || type === 6 || type === 16;\n})()"
+          },
+          "label": "Text Type Question"
+        },
+        {
+          "id": "15f945268a6840fcaf2dd367ac1f9881",
+          "edgeType": "Branch",
+          "source": "d0437f34d26b444db33f34c1a27ac180",
+          "target": "1c3433aad5024281a08d704962be2c10",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return !JSON.parse(vaVars.itemJSON).va_support;\n})()"
+          },
+          "label": "No VA Support"
+        },
+        {
+          "id": "9720926a939f4267afc5c03d3d1ec2b6",
+          "edgeType": "Edge",
+          "source": "1c3433aad5024281a08d704962be2c10",
+          "target": "43ce9c239d754a489c4e86af697c5538",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "b9bd3a69a74f400696e8f5b701788a2f",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "ef3651d55035493ea8adc6c06bd8d24f",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type === 10;\n})()\n"
+          },
+          "label": "Date-Time Question"
+        },
+        {
+          "id": "ef276a266b5443218b203b356687ef42",
+          "edgeType": "Edge",
+          "source": "ef3651d55035493ea8adc6c06bd8d24f",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "c77d7bde54f54394bf68d29dc7748f6c",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "6e3cdde8114a4b209031e19cd17832db",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var question = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    return question.type === 11 || (question.type === 0 &amp;&amp; question._internal_type === \"checkbox_container\");\n})()\n"
+          },
+          "label": "Question Label"
+        },
+        {
+          "id": "7beadb9025774f5487610246a90288a6",
+          "edgeType": "Edge",
+          "source": "6e3cdde8114a4b209031e19cd17832db",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "4b637bc588c44ed8b4c257e5ef652d41",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "4ed89e4fb93e4c5d84fd1d8bcad2a4fe",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var type = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type;\n    if (type === 0 || type === 12 || type === 19 || type === 20 || type === 24)\n        return true;\n})()\n"
+          },
+          "label": "Container Or Break Questions"
+        },
+        {
+          "id": "9815c8c52ffc481291ef16d8d6a0a0ce",
+          "edgeType": "Edge",
+          "source": "4ed89e4fb93e4c5d84fd1d8bcad2a4fe",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "f6c6d0cb64cf4251af39ff3a3e6f7d30",
+          "edgeType": "Edge",
+          "source": "07d77fd351cd4a6089e6e1c857f5bc6f",
+          "target": "f9b3f868f4a54c85bb85efb915858fb8",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "7a357ef7c252470d8e7bb9c2800e10a4",
+          "edgeType": "Edge",
+          "source": "f9b3f868f4a54c85bb85efb915858fb8",
+          "target": "6c11cc8776d84273a7a3beabc48723d5",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "53c3f17baeeb424b9ad8e5350593442c",
+          "edgeType": "Edge",
+          "source": "97374c78264b4017ae27622ca83fe515",
+          "target": "f9b3f868f4a54c85bb85efb915858fb8",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "0682227455ea4563956b5428adf3e0da",
+          "edgeType": "Branch",
+          "source": "6c11cc8776d84273a7a3beabc48723d5",
+          "target": "07d77fd351cd4a6089e6e1c857f5bc6f",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return !vaInputs.question_requested_for.getValue() || vaInputs.question_requested_for.getValue() === 'search';\n})()\n"
+          },
+          "label": "Search Requested For"
+        },
+        {
+          "id": "227f9835f6d844b8b3737b874adbf356",
+          "edgeType": "Branch",
+          "source": "6c11cc8776d84273a7a3beabc48723d5",
+          "target": "4aa932f4752e44aeac5cc0518dd9c066",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var valuePicked = vaInputs.question_requested_for.getValue();\n    var condition = valuePicked !== 'next' &amp;&amp; valuePicked !== 'prev';\n    if (condition) {\n        vaVars.count = 0;\n        vaVars.index = 0;\n    }\n    return condition;\n})();"
+          },
+          "label": "Requested For Chosen"
+        },
+        {
+          "id": "fbfc325f9e1b425180f5d12111409f31",
+          "edgeType": "Edge",
+          "source": "4aa932f4752e44aeac5cc0518dd9c066",
+          "target": "1bd4c04ce99f4e8fb3c940b84d911108",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "a3e5f30d31b3402b8f16b77cfaa5c76a",
+          "edgeType": "Branch",
+          "source": "1bd4c04ce99f4e8fb3c940b84d911108",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaVars.canView;\n})()\n"
+          },
+          "label": "Can View"
+        },
+        {
+          "id": "374115406607416695a8c094ce3e793c",
+          "edgeType": "Branch",
+          "source": "6c11cc8776d84273a7a3beabc48723d5",
+          "target": "8cb759a2d7164a01b793e24cda12468b",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaInputs.question_requested_for.getValue() === 'prev';\n})()\n"
+          },
+          "label": "Requested For Prev"
+        },
+        {
+          "id": "a1b9e53f7ab540a6bcf09a2c9b1133ca",
+          "edgeType": "Edge",
+          "source": "8cb759a2d7164a01b793e24cda12468b",
+          "target": "f9b3f868f4a54c85bb85efb915858fb8",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "db18404de05944fe89e47512c83bada4",
+          "edgeType": "Branch",
+          "source": "1bd4c04ce99f4e8fb3c940b84d911108",
+          "target": "00f14244b78341709e4407b46776eff9",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return !vaVars.canView\n})()\n"
+          },
+          "label": "Cannot View"
+        },
+        {
+          "id": "34ab1c4383b54a31ada0d09bd1119aa8",
+          "edgeType": "Edge",
+          "source": "00f14244b78341709e4407b46776eff9",
+          "target": "c560b0475bb34f3e82fecf4af3852e9b",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "d6736566c45c4fb8a8c7c22f6c5f08f4",
+          "edgeType": "Branch",
+          "source": "c560b0475bb34f3e82fecf4af3852e9b",
+          "target": "07d77fd351cd4a6089e6e1c857f5bc6f",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "request_for_another_user=true",
+            "mode": "query"
+          },
+          "label": "Request for Another User"
+        },
+        {
+          "id": "e699baf46ab6409e9e8f048f1fd3d306",
+          "edgeType": "Branch",
+          "source": "c560b0475bb34f3e82fecf4af3852e9b",
+          "target": "43ce9c239d754a489c4e86af697c5538",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "request_for_another_user=",
+            "mode": "query"
+          },
+          "label": "End Conversation"
+        },
+        {
+          "id": "9a8693081bba4c27b06e36cdde96e63c",
+          "edgeType": "Branch",
+          "source": "eaeb64a0932f48ae931dc9ae538b1a44",
+          "target": "6331b8c6297c4a7bbabbf09871822845",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaVars.validation_message.length === 0;\n})()\n"
+          },
+          "label": "Next Question"
+        },
+        {
+          "id": "fbfe62d1615d47039b2fd2ec13055c28",
+          "edgeType": "Branch",
+          "source": "6331b8c6297c4a7bbabbf09871822845",
+          "target": "581cfa3a32bc4121a49d644a0c2c6658",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n   return !JSON.parse(vaVars.itemJSON).has_on_change_policies;\n})()\n"
+          },
+          "label": "No onChange Policies"
+        },
+        {
+          "id": "e228260bdd2b4a9db8d78aee4ffb2eba",
+          "edgeType": "Branch",
+          "source": "6331b8c6297c4a7bbabbf09871822845",
+          "target": "fda851e09c59406c9000dccda34939e5",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n   return JSON.parse(vaVars.itemJSON).has_on_change_policies;\n})()\n"
+          },
+          "label": "Has onChange Policies"
+        },
+        {
+          "id": "1ce2f7e30e3d467895701fe81902372b",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var unSupportedTypes = vaVars.unsupportedVarTypes.split(',');\n   return unSupportedTypes.indexOf(String(JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type)) !== -1;\n})()\n"
+          },
+          "label": "Unsupported  Variable  Types"
+        },
+        {
+          "id": "9b80a48a30eb4223a4e80605e84c2988",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "02a5232d84934108bbfb1ef92b879fa8",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type === 26;\n})()\n"
+          },
+          "label": "Email Question"
+        },
+        {
+          "id": "87ab095c7baa46bc9b8561475c4febba",
+          "edgeType": "Edge",
+          "source": "02a5232d84934108bbfb1ef92b879fa8",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "854d5d02ecc240f7a90c3cb168675705",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "eb87710ff8a1476080bb21f80e57b3af",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type === 28;\n})()\n"
+          },
+          "label": "Ip Address Question"
+        },
+        {
+          "id": "f2e63e2bc2f64dfe8e52c079834997f5",
+          "edgeType": "Edge",
+          "source": "eb87710ff8a1476080bb21f80e57b3af",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "ed362f3c6e5c48288ae1ae2740102c54",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "c4ae158527f44e5bbdcaa0fd2aa740dc",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type === 27;\n})()\n"
+          },
+          "label": "URL Question"
+        },
+        {
+          "id": "7b4afba1019549a39cd8bcaa7b5b0302",
+          "edgeType": "Edge",
+          "source": "c4ae158527f44e5bbdcaa0fd2aa740dc",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "2bc3737f101b49b594c3d52749d09077",
+          "edgeType": "Branch",
+          "source": "581cfa3a32bc4121a49d644a0c2c6658",
+          "target": "b0d31864bd65445eb52068e43e3fb2b4",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    var qIndex = parseInt(vaVars.qIndex);\n    //qIndex is -1 initially, we reset this before search again step \n    do{\n        qIndex++;\n        var question = itemJson.variables[qIndex];\n    }\n    while(question &amp;&amp; (!question.visible || question.readonly || question.sys_readonly));\n\n    if (question) {\n       //There are variables that we can show\n        return false;\n    }\n    //No variables that we can show\n    return true;\n})()"
+          },
+          "label": "Questions Done"
+        },
+        {
+          "id": "7c90b78085a047f0852cd8bfe485fdfc",
+          "edgeType": "Branch",
+          "source": "b0d31864bd65445eb52068e43e3fb2b4",
+          "target": "7752c1440f114277be2ae841750f5585",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var item = JSON.parse(vaVars.itemJSON);\n    return item.no_attachments === true;\n})()\n"
+          },
+          "label": "Has  No Attachment"
+        },
+        {
+          "id": "2ee883f8b6bb4f8a90707236056a1c56",
+          "edgeType": "Branch",
+          "source": "b0d31864bd65445eb52068e43e3fb2b4",
+          "target": "ea97161dbe924742b9884bb17868d6b9",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var item = JSON.parse(vaVars.itemJSON);\n    return item.no_attachments === false;\n})()\n"
+          },
+          "label": "Has Attachment"
+        },
+        {
+          "id": "408c8932ae424be6a19993a602c34219",
+          "edgeType": "Edge",
+          "source": "ea97161dbe924742b9884bb17868d6b9",
+          "target": "4412f5ddec1f4be6985a38e35dcfadd4",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "7ef6eeb188424827aa91fd84c16f4116",
+          "edgeType": "Branch",
+          "source": "4412f5ddec1f4be6985a38e35dcfadd4",
+          "target": "7752c1440f114277be2ae841750f5585",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var item = JSON.parse(vaVars.itemJSON);\n    return !item.mandatory_attachment &amp;&amp; !vaInputs.add_attachment.getValue();\n})()\n"
+          },
+          "label": "No"
+        },
+        {
+          "id": "db96404b5f534cfdb1f2da500c67799c",
+          "edgeType": "Branch",
+          "source": "4412f5ddec1f4be6985a38e35dcfadd4",
+          "target": "afb136f8061e48fbb9c82d2b9d524b0e",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var item = JSON.parse(vaVars.itemJSON);\n    return item.mandatory_attachment || vaInputs.add_attachment.getValue();\n})()\n"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "902b4e556e6745a884d1ed72a4406d28",
+          "edgeType": "Edge",
+          "source": "061eb580e4284cae98686728c0d98754",
+          "target": "8afcd5a77c2a4509a3b7f36fd5940044",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "18a50a8f1ba4445d8763f5039fb42e93",
+          "edgeType": "Branch",
+          "source": "8afcd5a77c2a4509a3b7f36fd5940044",
+          "target": "afb136f8061e48fbb9c82d2b9d524b0e",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "add_more=true",
+            "mode": "query"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "a5b3258e932041caaffbb85dda4b2265",
+          "edgeType": "Branch",
+          "source": "8afcd5a77c2a4509a3b7f36fd5940044",
+          "target": "7752c1440f114277be2ae841750f5585",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "add_more=",
+            "mode": "query"
+          },
+          "label": "No"
+        },
+        {
+          "id": "dd57a3524f39442288741a4f4588253a",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "e0501b92da5847b3a3cab2c04caba5e3",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type === 33;\n})()\n"
+          },
+          "label": "Question Attachment"
+        },
+        {
+          "id": "34ad8bef0a7e455aaccf4522a713363d",
+          "edgeType": "Edge",
+          "source": "08a3129b9bca4e2ca8363f42cd15523b",
+          "target": "e63724c9f0644c2eb29f4b51618963c7",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "dee7cdd1227b4d3e9f66632623bbbe10",
+          "edgeType": "Branch",
+          "source": "e63724c9f0644c2eb29f4b51618963c7",
+          "target": "6331b8c6297c4a7bbabbf09871822845",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaVars.validation_message.length === 0;\n})()\n"
+          },
+          "label": "Next Question"
+        },
+        {
+          "id": "54c9b75f3ed0491eb33a19ce4a7386ba",
+          "edgeType": "Branch",
+          "source": "e63724c9f0644c2eb29f4b51618963c7",
+          "target": "f4d8640f9b304943b022ce615426ee82",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaVars.validation_message.length !== 0;\n})()\n"
+          },
+          "label": "Repeat Question"
+        },
+        {
+          "id": "3ec43d65618a452497dd6a9e8869bb16",
+          "edgeType": "Edge",
+          "source": "f4d8640f9b304943b022ce615426ee82",
+          "target": "e0501b92da5847b3a3cab2c04caba5e3",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "7b39a153184d4929a6eba2acf7051c6a",
+          "edgeType": "Edge",
+          "source": "249d9e389a31425699f016421bf1bb16",
+          "target": "46d03742e31a4e79b2d67a9f3355a670",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "987d288f018f46a7bfbb2b09205202f4",
+          "edgeType": "Branch",
+          "source": "46d03742e31a4e79b2d67a9f3355a670",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var itemJson = JSON.parse(vaVars.itemJSON);\n   \n    if (itemJson.sys_class_name !== 'sc_cat_item_producer') {\n        return true;\n    }    \n    return false;\n})()\n"
+          },
+          "label": "No"
+        },
+        {
+          "id": "6501291f14474db89df8672452c5cc73",
+          "edgeType": "Branch",
+          "source": "46d03742e31a4e79b2d67a9f3355a670",
+          "target": "76a2ab36ca3c482695ec75ea31ce9409",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var itemJson = JSON.parse(vaVars.itemJSON);\n    if (itemJson.sys_class_name === 'sc_cat_item_producer') {\n        return true;\n    }    \n    return false;\n})()"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "f765e5f8f52b4626ba5c077943c41042",
+          "edgeType": "Branch",
+          "source": "76a2ab36ca3c482695ec75ea31ce9409",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    /**\n     * Topic should pass execute_contextual_search as input if contextual search is required\n     *  It will execute contextual search only first time. For subsequent text variables, it will be skipped\n     */\n    var ans = vaInputs.question_text.getValue();\n    if(vaInputs.execute_contextual_search == 'false' || ans.trim().length === 0) {\n        return true;\n    }\n    return false;    \n})()\n"
+          },
+          "label": "No",
+          "fromNode": "- Execute Contextual Search",
+          "toNode": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "toEdge": "f765e5f8f52b4626ba5c077943c41042",
+          "addNode": {},
+          "nodeEntries": {}
+        },
+        {
+          "id": "df92e7bb74dc4dd68c3dd0f3e7e3e539",
+          "edgeType": "Branch",
+          "source": "76a2ab36ca3c482695ec75ea31ce9409",
+          "target": "370c98b7ee1c4fea80378d16b6ce8b12",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    /**\n     * Topic should pass execute_contextual_search as input if contextual search is required\n     *  It will execute contextual search only first time. For subsequent text variables, it will be skipped\n     */\n    var ans = vaInputs.question_text.getValue();\n    if(vaInputs.execute_contextual_search == 'true'  &amp;&amp; ans.trim().length !== 0) {\n        return true;\n    }\n    return false;     \n})()\n"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "bb336f512f7c471a9675246d28e51ec5",
+          "edgeType": "Edge",
+          "source": "370c98b7ee1c4fea80378d16b6ce8b12",
+          "target": "341f90c3e0944540937f7c475d2394b6",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "f631c6af09d54282933ca98997ef8f9d",
+          "edgeType": "Branch",
+          "source": "341f90c3e0944540937f7c475d2394b6",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    if(vaVars.contextualSearchVariable !== quesJson.sys_id) {\n        return true;\n    }\n    return false;\n})()"
+          },
+          "label": "No",
+          "fromNode": "- Contextual Search Variable ?",
+          "toNode": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "toEdge": "f631c6af09d54282933ca98997ef8f9d",
+          "addNode": {},
+          "nodeEntries": {}
+        },
+        {
+          "id": "8ef9ab663cb7447b882d420050c0fa92",
+          "edgeType": "Branch",
+          "source": "341f90c3e0944540937f7c475d2394b6",
+          "target": "f5781ceee0bd497fb31b163066251d61",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n    if(vaVars.contextualSearchVariable === quesJson.sys_id) {\n        return true;\n    }\n    return false;\n})()"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "4e25831cf89f42fe8ab5f0204204c286",
+          "edgeType": "Edge",
+          "source": "f5781ceee0bd497fb31b163066251d61",
+          "target": "c0aa3a467b7849b8960612b49d3f135b",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "9c17e144f6744fb38be5d51b6d1e84b0",
+          "edgeType": "Branch",
+          "source": "c0aa3a467b7849b8960612b49d3f135b",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    if(vaVars.contextualSearchResultCount &lt;= 0){\n        return true;\n    }\n    return false;\n})()\n"
+          },
+          "label": "No",
+          "fromNode": "- Did the search return results ?",
+          "toNode": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "toEdge": "9c17e144f6744fb38be5d51b6d1e84b0",
+          "addNode": {},
+          "nodeEntries": {}
+        },
+        {
+          "id": "a1ededf3a15b4a50b8042d3cb4a1b2cb",
+          "edgeType": "Branch",
+          "source": "c0aa3a467b7849b8960612b49d3f135b",
+          "target": "a4bcf2b6b829422681877c8cfe4127ee",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    if(vaVars.contextualSearchResultCount &gt; 0){\n        return true;\n    }\n    return false;\n})()\n"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "bd17f741e2a645c0bd481652a8642a84",
+          "edgeType": "Branch",
+          "source": "30e49d234a0a41a3a669a72e763d91ad",
+          "target": "43ce9c239d754a489c4e86af697c5538",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "did_articles_help=true",
+            "mode": "query"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "b25f073f1ce94da6914066dd41d70ccc",
+          "edgeType": "Branch",
+          "source": "30e49d234a0a41a3a669a72e763d91ad",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "did_articles_help!=true",
+            "mode": "query"
+          },
+          "label": "No",
+          "fromNode": "- Decision",
+          "toNode": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "toEdge": "b25f073f1ce94da6914066dd41d70ccc",
+          "addNode": {},
+          "nodeEntries": {}
+        },
+        {
+          "id": "6b61136686db40e683b4ffa7fc7cbd78",
+          "edgeType": "Edge",
+          "source": "a4bcf2b6b829422681877c8cfe4127ee",
+          "target": "c7293cb1079f49f394fbd3d4d755cec8",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "0b3edb91456d4ea7baca68c2376b176e",
+          "edgeType": "Edge",
+          "source": "c7293cb1079f49f394fbd3d4d755cec8",
+          "target": "30e49d234a0a41a3a669a72e763d91ad",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "6f670e0451b24641b3c1e03074d382bc",
+          "edgeType": "Edge",
+          "source": "66cdc45cec0b4e7d9a9336a3802700c6",
+          "target": "5f040df95dbf41f0a1736be574c66124",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "8737ed1716db40c39a33cd1e2f08cb6c",
+          "edgeType": "Branch",
+          "source": "5f040df95dbf41f0a1736be574c66124",
+          "target": "d12b5d39500946759c86e9e81a8cd6bf",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "confirm_catalog_item=true",
+            "mode": "query"
+          },
+          "label": "Yes"
+        },
+        {
+          "id": "0b23d7ae708b488283ff3aba4b8438d4",
+          "edgeType": "Branch",
+          "source": "5f040df95dbf41f0a1736be574c66124",
+          "target": "581cfa3a32bc4121a49d644a0c2c6658",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "confirm_catalog_item=false",
+            "mode": "query"
+          },
+          "label": "No",
+          "fromNode": "- Confirmation Required ?",
+          "toNode": "581cfa3a32bc4121a49d644a0c2c6658",
+          "toEdge": "0b23d7ae708b488283ff3aba4b8438d4",
+          "addNode": {},
+          "nodeEntries": {}
+        },
+        {
+          "id": "49f0ac9971f348508a51f174c384acd1",
+          "edgeType": "Branch",
+          "source": "015876b57058499b89fb0f0b0e0ed843",
+          "target": "25ca6917b8be426e8e07ecbe3e23f573",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "order_item=true",
+            "mode": "query"
+          },
+          "label": "Order Now"
+        },
+        {
+          "id": "f8b00a8eac9d4a7e8bda386dd44f906c",
+          "edgeType": "Branch",
+          "source": "25ca6917b8be426e8e07ecbe3e23f573",
+          "target": "907092bb1dbc48f7a4ae115e87ceb201",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    if (vaContext.catalog_builder_preview)\n       return false;\n    return true;\n})()\n"
+          },
+          "label": "Order"
+        },
+        {
+          "id": "e0f27d4f9f114a9c994889d8a8bb2c37",
+          "edgeType": "Branch",
+          "source": "25ca6917b8be426e8e07ecbe3e23f573",
+          "target": "e0c295cbdc48419c85b1cd421a787733",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n   if (vaContext.catalog_builder_preview)\n      return true;\n   return false;\n})()\n"
+          },
+          "label": "Preview"
+        },
+        {
+          "id": "08880004e7da4d30a7c03e7ec90d42b4",
+          "edgeType": "Branch",
+          "source": "370d7a1a97c54f938615de810aeb4465",
+          "target": "e3451f94af3d4a628885889b578d3f6d",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "submit_producer=true",
+            "mode": "query"
+          },
+          "label": "Submit Now"
+        },
+        {
+          "id": "98ab0b3cb1a94bcaa681b8e29ec56dae",
+          "edgeType": "Branch",
+          "source": "e3451f94af3d4a628885889b578d3f6d",
+          "target": "8fb89065d150429487db975b1272593f",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    if (vaContext.catalog_builder_preview)\n       return false;\n    return true;\n})()\n"
+          },
+          "label": "Submit"
+        },
+        {
+          "id": "d222e0c590cc48138064ff86e106fb82",
+          "edgeType": "Branch",
+          "source": "e3451f94af3d4a628885889b578d3f6d",
+          "target": "e0c295cbdc48419c85b1cd421a787733",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n   if (vaContext.catalog_builder_preview)\n      return true;\n   return false;\n})()\n"
+          },
+          "label": "Preview"
+        },
+        {
+          "id": "e314e3fb8e6444119aceb3926bc843c2",
+          "edgeType": "Edge",
+          "source": "e0c295cbdc48419c85b1cd421a787733",
+          "target": "f4e0c50270da45318941c999b46adcd3",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "34ba72e778a64c6fa309dd519b1d4f93",
+          "edgeType": "Edge",
+          "source": "f4e0c50270da45318941c999b46adcd3",
+          "target": "43ce9c239d754a489c4e86af697c5538",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "d45a29702e1740a9aa2b24fcfb561927",
+          "edgeType": "Edge",
+          "source": "afb136f8061e48fbb9c82d2b9d524b0e",
+          "target": "487a9e1cbdeb47d8a7f3397a555054db",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "cdd5f4ff8e72440697cb26caa70fe741",
+          "edgeType": "Branch",
+          "source": "487a9e1cbdeb47d8a7f3397a555054db",
+          "target": "cf40a5328a934bfca157b18b2a368149",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.upload_attachmentISNOTEMPTY",
+            "mode": "query"
+          },
+          "label": "Attachment uploaded"
+        },
+        {
+          "id": "6824200d14764705b19111d721f04918",
+          "edgeType": "Branch",
+          "source": "487a9e1cbdeb47d8a7f3397a555054db",
+          "target": "7752c1440f114277be2ae841750f5585",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.upload_attachmentISEMPTY",
+            "mode": "query"
+          },
+          "label": "Attachment skipped"
+        },
+        {
+          "id": "96dd79e6c6b44036b1f4773df5a3f789",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "29da6a654fc44d65b4ab60887cfd7afb",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type === 32;\n})()\n"
+          },
+          "label": "Rich Text Label Question"
+        },
+        {
+          "id": "6b9d088701284f609a14d5d9ba41c83b",
+          "edgeType": "Edge",
+          "source": "29da6a654fc44d65b4ab60887cfd7afb",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "43a70199c1d6476fbaf5f00295ec2565",
+          "edgeType": "Branch",
+          "source": "581cfa3a32bc4121a49d644a0c2c6658",
+          "target": "126d56ed504c4feba7566007d67afd9d",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n     var itemJson = JSON.parse(vaVars.itemJSON);\n    var qIndex = parseInt(vaVars.qIndex);\n    //qIndex is -1 initially, we reset this before search again step \n\n    do {\n        qIndex++;\n        var question = itemJson.variables[qIndex];\n    }\n    while(question &amp;&amp; (!question.visible || question.readonly || question.sys_readonly));\n\n    if (question) {\n        vaVars.qIndex = qIndex;\n        return true;\n    }\n    return false;\n})()"
+          },
+          "label": "Questions Left"
+        },
+        {
+          "id": "e12c669135a3469a8bcc739412a21b06",
+          "edgeType": "Edge",
+          "source": "126d56ed504c4feba7566007d67afd9d",
+          "target": "1454753402904126922993fa48cd933c",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "e8394d4cc2a84c0a8e3dfc51273d7cb2",
+          "edgeType": "Edge",
+          "source": "1454753402904126922993fa48cd933c",
+          "target": "5be3dc6f8ca34dd183e13e91ea34c9bd",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "139c0e17bbce4a149ae047de0415c16d",
+          "edgeType": "Branch",
+          "source": "5be3dc6f8ca34dd183e13e91ea34c9bd",
+          "target": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.proceed_with_default=",
+            "mode": "query"
+          },
+          "label": "Do not proceed with default value"
+        },
+        {
+          "id": "0ba92b3ce64d44e6bfbdda23c9d42bcb",
+          "edgeType": "Branch",
+          "source": "5be3dc6f8ca34dd183e13e91ea34c9bd",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.proceed_with_default=true",
+            "mode": "query"
+          },
+          "label": "Proceed with default value"
+        },
+        {
+          "id": "ce57356236be4f82bb0e934d75aa5f61",
+          "edgeType": "Edge",
+          "source": "907092bb1dbc48f7a4ae115e87ceb201",
+          "target": "1da905f00b5e40bc80ec460b772f2b6a",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "fe545cdeae80468b9ba4c521e108a041",
+          "edgeType": "Branch",
+          "source": "1da905f00b5e40bc80ec460b772f2b6a",
+          "target": "43ce9c239d754a489c4e86af697c5538",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.show_end_state_card=",
+            "mode": "query"
+          },
+          "label": "No",
+          "fromNode": "24 Show end state card?",
+          "toNode": "43ce9c239d754a489c4e86af697c5538",
+          "toEdge": "fe545cdeae80468b9ba4c521e108a041",
+          "addNode": {},
+          "nodeEntries": {}
+        },
+        {
+          "id": "a417046840ae427891d755ded1677a92",
+          "edgeType": "Edge",
+          "source": "241a800b7cb04587be59f51d05e97adb",
+          "target": "28af889cf2c74c33be4b3ff314644135",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "5ea1b1b58be1475896ede05ca87fa247",
+          "edgeType": "Branch",
+          "source": "28af889cf2c74c33be4b3ff314644135",
+          "target": "249d9e389a31425699f016421bf1bb16",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var type = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type;\n    return type === 2 || type === 6 || type === 16;\n})()"
+          },
+          "label": "Text Type"
+        },
+        {
+          "id": "7faaf5df43f64cc2bdb6f40a42de6b18",
+          "edgeType": "Branch",
+          "source": "28af889cf2c74c33be4b3ff314644135",
+          "target": "02a5232d84934108bbfb1ef92b879fa8",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type === 26;\n})()\n"
+          },
+          "label": "Email Type"
+        },
+        {
+          "id": "066de2f3289246e392e2d82c57556f3c",
+          "edgeType": "Branch",
+          "source": "28af889cf2c74c33be4b3ff314644135",
+          "target": "eb87710ff8a1476080bb21f80e57b3af",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type === 28;\n})()\n"
+          },
+          "label": "IP Address Type"
+        },
+        {
+          "id": "0a2ff9565ac240bb861a3b1b8d708093",
+          "edgeType": "Branch",
+          "source": "28af889cf2c74c33be4b3ff314644135",
+          "target": "c4ae158527f44e5bbdcaa0fd2aa740dc",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type === 27;\n})()\n"
+          },
+          "label": "URL Type"
+        },
+        {
+          "id": "8cec931e0023472f84639f9f2b703967",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "7450595f413545159d562de44e4f0d0e",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var type = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type;\n    return type === 1 || type === 3 || type === 4 || type === 5 || type === 7 || type === 18 || type === 22;\n})()\n"
+          },
+          "label": "Choice or Checkbox Question"
+        },
+        {
+          "id": "f6b7d4745190489bb2badc8e2c88af78",
+          "edgeType": "Branch",
+          "source": "7450595f413545159d562de44e4f0d0e",
+          "target": "0270a40e70154b39bfefd1f7cb8e59b1",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return !(vaContext.deviceType === \"mweb\");\n})()\n"
+          },
+          "label": "Other Channels"
+        },
+        {
+          "id": "df0f4009e433484684fb7fc987e459c4",
+          "edgeType": "Edge",
+          "source": "0270a40e70154b39bfefd1f7cb8e59b1",
+          "target": "a77154b1fbfc4aa2a4d7af7c5911f72e",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "16d4791d96ba49dea34d2c982aefcedd",
+          "edgeType": "Branch",
+          "source": "a77154b1fbfc4aa2a4d7af7c5911f72e",
+          "target": "c522b46f211b4594aceecdb38b60ffe3",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaInputs.question_choice_other_channels.getValue() === \"prev\";\n})()\n"
+          },
+          "label": "Question Choice Prev"
+        },
+        {
+          "id": "ef7de79d9ff647ee92884f2509995989",
+          "edgeType": "Edge",
+          "source": "c522b46f211b4594aceecdb38b60ffe3",
+          "target": "0270a40e70154b39bfefd1f7cb8e59b1",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "dcf1458d8c3d4f1a9dfb3706bcd9923a",
+          "edgeType": "Branch",
+          "source": "a77154b1fbfc4aa2a4d7af7c5911f72e",
+          "target": "b76b801e95134eef929707a69b4bb264",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaInputs.question_choice_other_channels.getValue() === \"next\";\n})()\n"
+          },
+          "label": "Question Choice Next"
+        },
+        {
+          "id": "a27a0ca604c44f09be01629632bd9061",
+          "edgeType": "Edge",
+          "source": "b76b801e95134eef929707a69b4bb264",
+          "target": "0270a40e70154b39bfefd1f7cb8e59b1",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "434a6b521d5d49b8885ba8b241bc8ade",
+          "edgeType": "Branch",
+          "source": "a77154b1fbfc4aa2a4d7af7c5911f72e",
+          "target": "1f0ca38bf5734bbd9b65850146385b67",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var valuePicked = vaInputs.question_choice_other_channels.getValue();\n    var condition = valuePicked !== 'next' &amp;&amp; valuePicked !== 'prev';\n    if (condition) {\n        vaVars.count = 0;\n        vaVars.index = 0;\n    }\n    return condition;\n})();"
+          },
+          "label": "Question Choice Chosen"
+        },
+        {
+          "id": "f434643f7f9241f6b419ad73f4da508e",
+          "edgeType": "Edge",
+          "source": "1f0ca38bf5734bbd9b65850146385b67",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "0a84ab2a42424808b5e6a717ebd6577c",
+          "edgeType": "Branch",
+          "source": "6e2ebbdb139b4b2bbd694be7637422e5",
+          "target": "969811e3668b4aa09e949479e58394a3",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n   return JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type === 8;\n})()"
+          },
+          "label": "Reference Question"
+        },
+        {
+          "id": "8e3459188c22484997849b9b481fb9fd",
+          "edgeType": "Branch",
+          "source": "969811e3668b4aa09e949479e58394a3",
+          "target": "74afb8d59ac445d3a9686ea2d2d55759",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaContext.deviceType === \"mweb\";\n})()\n"
+          },
+          "label": "Mobile/Web Client"
+        },
+        {
+          "id": "d593b9f64c8e484c8b64b412e6d59219",
+          "edgeType": "Branch",
+          "source": "969811e3668b4aa09e949479e58394a3",
+          "target": "f62606ed1779447ab116ff33d1665363",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return !(vaContext.deviceType === \"mweb\");\n})()"
+          },
+          "label": "Other Channels"
+        },
+        {
+          "id": "134b72b1b3f44b649c08de524a1b06f7",
+          "edgeType": "Edge",
+          "source": "f62606ed1779447ab116ff33d1665363",
+          "target": "00ceea5c256d4b1c95de8cfac697ee7e",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "a3c6ef3c7d434f63a16320c22d08b7a4",
+          "edgeType": "Edge",
+          "source": "00ceea5c256d4b1c95de8cfac697ee7e",
+          "target": "b95d3039249345b19e62dd023aa24164",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "8f28dc54677c4350a0814da7af985b84",
+          "edgeType": "Branch",
+          "source": "b95d3039249345b19e62dd023aa24164",
+          "target": "e65737d72d5b4e57bdbc89fcf6d7e3e4",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaInputs.question_reference_other_channels.getValue() === \"prev\";\n})()\n"
+          },
+          "label": "Question Reference Prev"
+        },
+        {
+          "id": "0e6607e5f84d40478f14918148c57f8d",
+          "edgeType": "Edge",
+          "source": "e65737d72d5b4e57bdbc89fcf6d7e3e4",
+          "target": "00ceea5c256d4b1c95de8cfac697ee7e",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "dd47f4630b254ec3b9122825a1207146",
+          "edgeType": "Branch",
+          "source": "b95d3039249345b19e62dd023aa24164",
+          "target": "f05bdc49e33f49308a7f1ff5cfc8fa42",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return vaInputs.question_reference_other_channels.getValue() === \"next\";\n})()\n"
+          },
+          "label": "Question Reference Next"
+        },
+        {
+          "id": "fa279a226c9e488fa51d254af7fffce1",
+          "edgeType": "Edge",
+          "source": "f05bdc49e33f49308a7f1ff5cfc8fa42",
+          "target": "00ceea5c256d4b1c95de8cfac697ee7e",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "75c8b216f8d54e3ba3d5e877955ace9c",
+          "edgeType": "Branch",
+          "source": "b95d3039249345b19e62dd023aa24164",
+          "target": "8ae24505e57747c582169b40b2ae69df",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var valuePicked = vaInputs.question_reference_other_channels.getValue();\n    var chosenCondition = valuePicked &amp;&amp; valuePicked !== 'next' &amp;&amp; valuePicked !== 'prev' &amp;&amp; valuePicked !== 'search';\n    var skippedCondition = vaVars.no_records_found === \"false\" &amp;&amp; !valuePicked;\n    if (chosenCondition || skippedCondition) {\n        vaVars.count = 0;\n        vaVars.index = 0;\n    }\n    \n    return chosenCondition || skippedCondition;\n})();"
+          },
+          "label": "Question Reference Chosen/Skipped"
+        },
+        {
+          "id": "508e267fd3444ae695e661fac52f9c76",
+          "edgeType": "Branch",
+          "source": "b95d3039249345b19e62dd023aa24164",
+          "target": "f62606ed1779447ab116ff33d1665363",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    var valuePicked = vaInputs.question_reference_other_channels.getValue();\n    var condition = (vaVars.no_records_found === \"true\") || valuePicked === \"search\";\n    if (condition) {\n        vaVars.count = 0;\n        vaVars.index = 0;\n    }\n    return condition;\n})()\n"
+          },
+          "label": "Search Question Reference"
+        },
+        {
+          "id": "0269d3beba234b78959238606edae32d",
+          "edgeType": "Edge",
+          "source": "74afb8d59ac445d3a9686ea2d2d55759",
+          "target": "8ae24505e57747c582169b40b2ae69df",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "a627720de1fd43d99769225a27b844ff",
+          "edgeType": "Edge",
+          "source": "8ae24505e57747c582169b40b2ae69df",
+          "target": "544e7e443c1a42b19cc4a9a950c1fa0d",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "735672388c694ab888f31480343f1aa8",
+          "edgeType": "Branch",
+          "source": "1da905f00b5e40bc80ec460b772f2b6a",
+          "target": "741ae5c0a9404da3859ed9e74d951f7d",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.show_end_state_card=true",
+            "mode": "query"
+          },
+          "label": "Yes",
+          "fromNode": "24 Show end state card?",
+          "toNode": "43ce9c239d754a489c4e86af697c5538",
+          "toEdge": "735672388c694ab888f31480343f1aa8",
+          "addNode": {},
+          "nodeEntries": {}
+        },
+        {
+          "id": "298a9731132f4733a175e2200818bdeb",
+          "edgeType": "Branch",
+          "source": "52668753c54c4c3093d56bdc31ec8ca5",
+          "target": "66cdc45cec0b4e7d9a9336a3802700c6",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return !!vaVars.isValidCatItem;\n})()\n"
+          },
+          "label": "Valid Catalog Item",
+          "fromNode": "3 Catalog item validity check",
+          "toNode": "66cdc45cec0b4e7d9a9336a3802700c6",
+          "toEdge": "298a9731132f4733a175e2200818bdeb",
+          "addNode": {},
+          "nodeEntries": {}
+        },
+        {
+          "id": "f8c58c90b6e54ef19e912085c9bcfad9",
+          "edgeType": "Branch",
+          "source": "52668753c54c4c3093d56bdc31ec8ca5",
+          "target": "1c3433aad5024281a08d704962be2c10",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return !vaVars.isValidCatItem;\n})()\n"
+          },
+          "label": "Invalid Catalog Item",
+          "fromNode": "3 Catalog item validity check",
+          "toNode": "1c3433aad5024281a08d704962be2c10",
+          "toEdge": "f8c58c90b6e54ef19e912085c9bcfad9",
+          "addNode": {},
+          "nodeEntries": {}
+        },
+        {
+          "id": "d43ee6abc4f3494794514128c15c74e0",
+          "edgeType": "Edge",
+          "source": "378ad13fcfac4ead8bc77e5a4dba6a79",
+          "target": "423c10d2faf8457f85e36f977baab657",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "b0e2f0c315d44a20b48ec22eb6547a54",
+          "edgeType": "Edge",
+          "source": "423c10d2faf8457f85e36f977baab657",
+          "target": "52668753c54c4c3093d56bdc31ec8ca5",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "df279833ddd049bea6001b223dabee7a",
+          "edgeType": "Edge",
+          "source": "fda851e09c59406c9000dccda34939e5",
+          "target": "f23ca9a48df54707b19ba6900ec853c6",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "117e39d4632b42c195dbf47ce274a279",
+          "edgeType": "Branch",
+          "source": "f23ca9a48df54707b19ba6900ec853c6",
+          "target": "581cfa3a32bc4121a49d644a0c2c6658",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n     var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n     var json = new JSON();\n\n     return !((json.getKeys(quesJson.field_info_messages).length &gt; 0) || (json.getKeys(quesJson.field_warn_messages).length &gt; 0)\n     || (json.getKeys(quesJson.field_error_messages).length &gt; 0));\n})()\n"
+          },
+          "label": "Has no field messages",
+          "fromNode": "93 Decision",
+          "toNode": "581cfa3a32bc4121a49d644a0c2c6658",
+          "toEdge": "117e39d4632b42c195dbf47ce274a279",
+          "addNode": {},
+          "nodeEntries": {}
+        },
+        {
+          "id": "4cf2b5272ea54320857d890a0c2aba8b",
+          "edgeType": "Branch",
+          "source": "f23ca9a48df54707b19ba6900ec853c6",
+          "target": "57fd356114a64824b39a80f5ee817efb",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n     var quesJson = JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex];\n     var json = new JSON();\n\n     return ((json.getKeys(quesJson.field_info_messages).length &gt; 0) ||\n      (json.getKeys(quesJson.field_warn_messages).length &gt; 0) || \n      (json.getKeys(quesJson.field_error_messages).length &gt; 0));\n})()\n"
+          },
+          "label": "Has Field info and warning messages"
+        },
+        {
+          "id": "8f95bac3bb6744b393736223845bbc0b",
+          "edgeType": "Edge",
+          "source": "57fd356114a64824b39a80f5ee817efb",
+          "target": "44f5c39461c24896aa9f5683cceb8008",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "66882ff42fc1442ca5481f4e9e46ccd7",
+          "edgeType": "Branch",
+          "source": "44f5c39461c24896aa9f5683cceb8008",
+          "target": "2f7816ec6c094ce687fbbaa6856ad4e2",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "value": "vaInputs.change_response=true",
+            "mode": "query"
+          },
+          "label": "true",
+          "fromNode": "95 Decision",
+          "toNode": "581cfa3a32bc4121a49d644a0c2c6658",
+          "toEdge": "66882ff42fc1442ca5481f4e9e46ccd7",
+          "addNode": {},
+          "nodeEntries": {}
+        },
+        {
+          "id": "a246bf93023e4c16b35d3502128ec023",
+          "edgeType": "Edge",
+          "source": "2f7816ec6c094ce687fbbaa6856ad4e2",
+          "target": "581cfa3a32bc4121a49d644a0c2c6658",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "6bd01ce806004abe80bad4ea9a09d5e0",
+          "edgeType": "Branch",
+          "source": "28af889cf2c74c33be4b3ff314644135",
+          "target": "7450595f413545159d562de44e4f0d0e",
+          "sourcePort": "",
+          "targetPort": "",
+          "expression": {
+            "mode": "script",
+            "value": "(function execute() {\n    return JSON.parse(vaVars.itemJSON).variables[vaVars.qIndex].type === 7;\n})()\n"
+          },
+          "label": "Checkbox Type"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "8fa12fe8f0e8479abed78d3b848efe48": {
+      "id": "8fa12fe8f0e8479abed78d3b848efe48",
+      "name": "catalog_item_id",
+      "label": "Catalog_item_id",
+      "defaultValue": "",
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "input"
+      },
+      "nodeId": "378ad13fcfac4ead8bc77e5a4dba6a79",
+      "isHidden": false
+    },
+    "d2c71cead295434993ad3eb11f295403": {
+      "id": "d2c71cead295434993ad3eb11f295403",
+      "value": {
+        "mode": "simple",
+        "value": ""
+      },
+      "name": "itemJSON",
+      "label": "itemJSON",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "e83eadf121d74562a0169f7b7a50369f": {
+      "id": "e83eadf121d74562a0169f7b7a50369f",
+      "value": {
+        "mode": "simple",
+        "value": ""
+      },
+      "name": "itemName",
+      "label": "itemName",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "2f1c4de5be8745968a0f89a745573f32": {
+      "id": "2f1c4de5be8745968a0f89a745573f32",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    return '';\n})()\n"
+      },
+      "name": "record_id",
+      "label": "record_id",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "82ffb64bfb484b038949397cb032ccaa": {
+      "id": "82ffb64bfb484b038949397cb032ccaa",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    return '';\n})()\n"
+      },
+      "name": "record_table",
+      "label": "record_table",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "c2887f797885435894a92ab6646947fb": {
+      "id": "c2887f797885435894a92ab6646947fb",
+      "name": "proceed",
+      "label": "Proceed",
+      "varType": "boolean",
+      "category": "vaInputs",
+      "nodeId": "bc6e0a39cbab451bbdaaba62df33c5ed",
+      "isHidden": false
+    },
+    "80e3635c056944088be67082e3371071": {
+      "id": "80e3635c056944088be67082e3371071",
+      "value": {
+        "mode": "simple",
+        "value": "-1"
+      },
+      "name": "qIndex",
+      "label": "qIndex",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "eb764928a34242da91ba1bc092040791": {
+      "id": "eb764928a34242da91ba1bc092040791",
+      "name": "submit_producer",
+      "label": "Submit Producer",
+      "varType": "boolean",
+      "category": "vaInputs",
+      "nodeId": "0bbee88923544b5d864a7ebfa5aa7b1d",
+      "isHidden": false
+    },
+    "c61c83a532c84da8b0f48775bec6b9f1": {
+      "id": "c61c83a532c84da8b0f48775bec6b9f1",
+      "value": {
+        "mode": "simple",
+        "value": "7"
+      },
+      "name": "limit",
+      "label": "limit",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "07a35cb1c3a547fba3443c2df98acc8a": {
+      "id": "07a35cb1c3a547fba3443c2df98acc8a",
+      "value": {
+        "mode": "simple",
+        "value": "0"
+      },
+      "name": "count",
+      "label": "count",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "24899b2431274000823add85e4ac0b4d": {
+      "id": "24899b2431274000823add85e4ac0b4d",
+      "value": {
+        "mode": "simple",
+        "value": "0"
+      },
+      "name": "index",
+      "label": "index",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "24784fef3a7c40229ea0c0db7b2b38ca": {
+      "id": "24784fef3a7c40229ea0c0db7b2b38ca",
+      "name": "order_item",
+      "label": "Order Item",
+      "varType": "boolean",
+      "category": "vaInputs",
+      "nodeId": "f7d41b80c7764dd1b1b9dda3acc23754",
+      "isHidden": false
+    },
+    "c31318903433407fafbc5e2e9ce7ba65": {
+      "id": "c31318903433407fafbc5e2e9ce7ba65",
+      "name": "question_date",
+      "label": "Question Date",
+      "varType": "date_time",
+      "category": "vaInputs",
+      "mode": "date",
+      "nodeId": "9e6e235f722149a58b678031d642cc77",
+      "isHidden": false
+    },
+    "db6c4da0c3554f718a0a1c376e4e8433": {
+      "id": "db6c4da0c3554f718a0a1c376e4e8433",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    return '';\n})()\n"
+      },
+      "name": "validation_message",
+      "label": "validation_message",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "9f673cec4f9445edb26f124540e590ca": {
+      "id": "9f673cec4f9445edb26f124540e590ca",
+      "name": "question_text",
+      "label": "Question Text",
+      "varType": "string",
+      "category": "vaInputs",
+      "secure": false,
+      "encryptionSalt": {
+        "value": "MTYxMTIxNzA0NzMzMiBWQSBEZXNpZ25lciBpcyBhd2Vzb21l",
+        "mode": "simple"
+      },
+      "encryptionHashFunction": "SHA-256",
+      "nodeId": "249d9e389a31425699f016421bf1bb16",
+      "isHidden": false
+    },
+    "0cca0191e5eb400f8f32e7d9d4e90f37": {
+      "id": "0cca0191e5eb400f8f32e7d9d4e90f37",
+      "name": "question_reference",
+      "label": "Question Reference",
+      "varType": "reference",
+      "table": "",
+      "category": "vaInputs",
+      "nodeId": "74afb8d59ac445d3a9686ea2d2d55759",
+      "isHidden": false,
+      "autoSelect": false,
+      "autoSelectExpression": ""
+    },
+    "8d7c08408a8647608d58b871cbe93136": {
+      "category": "vaInputs",
+      "id": "8d7c08408a8647608d58b871cbe93136",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "11c836682f6e45ec8a45401def9d6f86": {
+      "id": "11c836682f6e45ec8a45401def9d6f86",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    return '';\n})()\n"
+      },
+      "name": "request_for",
+      "label": "request_for",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "42d8667a7d28429fa456ee7fd304247a": {
+      "id": "42d8667a7d28429fa456ee7fd304247a",
+      "name": "question_choice",
+      "label": "Question Choice",
+      "varType": "reference",
+      "table": "",
+      "category": "vaInputs",
+      "nodeId": "cf927562b3de408db8185ad9537a14d2",
+      "isHidden": false,
+      "autoSelect": false,
+      "autoSelectExpression": ""
+    },
+    "61788c93b7bc49dd9a5ddaadc67cb876": {
+      "id": "61788c93b7bc49dd9a5ddaadc67cb876",
+      "name": "question_date_time",
+      "label": "Question Date Time",
+      "varType": "date_time",
+      "category": "vaInputs",
+      "mode": "date_time",
+      "nodeId": "ef3651d55035493ea8adc6c06bd8d24f",
+      "isHidden": false
+    },
+    "5a02f855f9584fc8ad57fc779ed10419": {
+      "id": "5a02f855f9584fc8ad57fc779ed10419",
+      "name": "question_requested_for",
+      "label": "Question Requested For",
+      "varType": "reference",
+      "table": "",
+      "category": "vaInputs",
+      "nodeId": "f9b3f868f4a54c85bb85efb915858fb8",
+      "isHidden": false,
+      "autoSelect": false,
+      "autoSelectExpression": ""
+    },
+    "7c5018bb937e48379c8747593ee7f905": {
+      "id": "7c5018bb937e48379c8747593ee7f905",
+      "name": "search_requested_for",
+      "label": "Search Requested For",
+      "varType": "string",
+      "category": "vaInputs",
+      "secure": false,
+      "encryptionSalt": {
+        "value": "MTYxMTIxNzA0NzMzMiBWQSBEZXNpZ25lciBpcyBhd2Vzb21l",
+        "mode": "simple"
+      },
+      "encryptionHashFunction": "SHA-256",
+      "nodeId": "07d77fd351cd4a6089e6e1c857f5bc6f",
+      "isHidden": false
+    },
+    "43a0c159335e4dbe9dd55de1c5aa2e5d": {
+      "id": "43a0c159335e4dbe9dd55de1c5aa2e5d",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    return false;\n})()\n"
+      },
+      "name": "canView",
+      "label": "canView",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "fc59685d29934f1b8a4a9a3832b30289": {
+      "id": "fc59685d29934f1b8a4a9a3832b30289",
+      "name": "request_for_another_user",
+      "label": "Request For Another User",
+      "varType": "boolean",
+      "category": "vaInputs",
+      "nodeId": "00f14244b78341709e4407b46776eff9",
+      "isHidden": false
+    },
+    "abf53e7ffa51483b9e67d61a8c6cb4e5": {
+      "id": "abf53e7ffa51483b9e67d61a8c6cb4e5",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    return '14,15,17,21,23,25,29,30';\n})()\n"
+      },
+      "name": "unsupportedVarTypes",
+      "label": "unsupportedVarTypes",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "fab1bf8609594588ab6c868e1b8e594d": {
+      "id": "fab1bf8609594588ab6c868e1b8e594d",
+      "name": "question_email",
+      "label": "Question Email",
+      "varType": "string",
+      "category": "vaInputs",
+      "secure": false,
+      "encryptionSalt": {
+        "value": "MTYxMTIxNzA0NzMzMiBWQSBEZXNpZ25lciBpcyBhd2Vzb21l",
+        "mode": "simple"
+      },
+      "encryptionHashFunction": "SHA-256",
+      "nodeId": "02a5232d84934108bbfb1ef92b879fa8",
+      "isHidden": false
+    },
+    "eda878af9d4441ee92ca3be9fb2e597a": {
+      "id": "eda878af9d4441ee92ca3be9fb2e597a",
+      "name": "question_ip_address",
+      "label": "Question IP Address",
+      "varType": "string",
+      "category": "vaInputs",
+      "secure": false,
+      "encryptionSalt": {
+        "value": "MTYxMTIxNzA0NzMzMiBWQSBEZXNpZ25lciBpcyBhd2Vzb21l",
+        "mode": "simple"
+      },
+      "encryptionHashFunction": "SHA-256",
+      "nodeId": "eb87710ff8a1476080bb21f80e57b3af",
+      "isHidden": false
+    },
+    "31d43f086a7448f585cc30152755dd02": {
+      "id": "31d43f086a7448f585cc30152755dd02",
+      "name": "question_url",
+      "label": "Question URL",
+      "varType": "string",
+      "category": "vaInputs",
+      "secure": false,
+      "encryptionSalt": {
+        "value": "MTYxMTIxNzA0NzMzMiBWQSBEZXNpZ25lciBpcyBhd2Vzb21l",
+        "mode": "simple"
+      },
+      "encryptionHashFunction": "SHA-256",
+      "nodeId": "c4ae158527f44e5bbdcaa0fd2aa740dc",
+      "isHidden": false
+    },
+    "399e19a568f849f69c6a29ddc9fa55e4": {
+      "id": "399e19a568f849f69c6a29ddc9fa55e4",
+      "name": "add_attachment",
+      "label": "Add Attachment",
+      "varType": "boolean",
+      "category": "vaInputs",
+      "nodeId": "ea97161dbe924742b9884bb17868d6b9",
+      "isHidden": false
+    },
+    "7225ee63aa954a44b4e919a388bdbc2a": {
+      "id": "7225ee63aa954a44b4e919a388bdbc2a",
+      "name": "upload_attachment",
+      "label": "Upload Attachment",
+      "varType": "file",
+      "category": "vaInputs",
+      "nodeId": "afb136f8061e48fbb9c82d2b9d524b0e",
+      "isHidden": false
+    },
+    "c1fed51ebcf34948a68dc1ce5a77c8b3": {
+      "id": "c1fed51ebcf34948a68dc1ce5a77c8b3",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    return '';\n})()\n"
+      },
+      "name": "media_links_form_attachment",
+      "label": "media_links_form_attachment",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "a8e8f285628a405188317c781227dbb6": {
+      "id": "a8e8f285628a405188317c781227dbb6",
+      "name": "add_more",
+      "label": "Add More",
+      "varType": "boolean",
+      "category": "vaInputs",
+      "nodeId": "061eb580e4284cae98686728c0d98754",
+      "isHidden": false
+    },
+    "3b57536c82b8469aa467550c31cd2e9f": {
+      "id": "3b57536c82b8469aa467550c31cd2e9f",
+      "name": "question_attachment",
+      "label": "Question Attachment",
+      "varType": "file",
+      "category": "vaInputs",
+      "nodeId": "e0501b92da5847b3a3cab2c04caba5e3",
+      "isHidden": false
+    },
+    "0e4f4f5572554f2db7c27392103bc2b6": {
+      "id": "0e4f4f5572554f2db7c27392103bc2b6",
+      "name": "execute_contextual_search",
+      "label": "Execute_contextual_search",
+      "defaultValue": "false",
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "input"
+      },
+      "nodeId": "378ad13fcfac4ead8bc77e5a4dba6a79",
+      "isHidden": false
+    },
+    "b7c5f4768da94155a81b6d5ffc4cea22": {
+      "id": "b7c5f4768da94155a81b6d5ffc4cea22",
+      "name": "confirm_catalog_item",
+      "label": "Confirm_catalog_item",
+      "defaultValue": "true",
+      "varType": "string",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "input"
+      },
+      "nodeId": "378ad13fcfac4ead8bc77e5a4dba6a79",
+      "isHidden": false
+    },
+    "ddf3dd7595264d6c9dc4632b66f4641d": {
+      "id": "ddf3dd7595264d6c9dc4632b66f4641d",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    return '';\n})()\n"
+      },
+      "name": "contextualSearchVariable",
+      "label": "contextualSearchVariable",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "77900a28fcfe4be89c02f23433d23180": {
+      "id": "77900a28fcfe4be89c02f23433d23180",
+      "value": {
+        "mode": "simple",
+        "value": "2821675a5b30130070e4492c11f91a89"
+      },
+      "name": "contextualSearchContext",
+      "label": "contextualSearchContext",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "aefc64435ff3480fa60090851991a03f": {
+      "id": "aefc64435ff3480fa60090851991a03f",
+      "value": {
+        "mode": "simple",
+        "value": "3"
+      },
+      "name": "contextualSearchResultLimit",
+      "label": "contextualSearchResultLimit",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "1f4984c5dc054005abf91a9788a0e0c6": {
+      "id": "1f4984c5dc054005abf91a9788a0e0c6",
+      "value": {
+        "mode": "simple",
+        "value": "0"
+      },
+      "name": "contextualSearchIndex",
+      "label": "contextualSearchIndex",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "7187337febe748d1a3ae252863e75ec6": {
+      "id": "7187337febe748d1a3ae252863e75ec6",
+      "value": {
+        "value": "",
+        "mode": "simple"
+      },
+      "name": "contextualSearchResultJsonString",
+      "label": "contextualSearchResultJsonString",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "b91dada7c24e4990ac659ffbf9f7b067": {
+      "id": "b91dada7c24e4990ac659ffbf9f7b067",
+      "value": {
+        "mode": "simple",
+        "value": "0"
+      },
+      "name": "contextualSearchResultCount",
+      "label": "contextualSearchResultCount",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "91799a9e95b24ba7afa5f315087fa092": {
+      "id": "91799a9e95b24ba7afa5f315087fa092",
+      "name": "did_articles_help",
+      "label": "Did_articles_help",
+      "varType": "boolean",
+      "category": "vaInputs",
+      "nodeId": "c7293cb1079f49f394fbd3d4d755cec8",
+      "isHidden": false
+    },
+    "05f83b627d4f49f8bf5a05553378d657": {
+      "id": "05f83b627d4f49f8bf5a05553378d657",
+      "name": "proceed_with_default",
+      "label": "Proceed With Default",
+      "varType": "boolean",
+      "secure": false,
+      "category": "vaInputs",
+      "nodeId": "1454753402904126922993fa48cd933c",
+      "isHidden": false
+    },
+    "ec4a34bcfc3944a195c6266d03a67589": {
+      "id": "ec4a34bcfc3944a195c6266d03a67589",
+      "name": "show_end_state_card",
+      "label": "Show_end_state_card",
+      "defaultValue": "false",
+      "varType": "boolean",
+      "category": "vaInputs",
+      "metadata": {
+        "libraryMappingType": "input"
+      },
+      "nodeId": "378ad13fcfac4ead8bc77e5a4dba6a79",
+      "isHidden": false
+    },
+    "d7f460bbd15e45b8b2269d36a113628b": {
+      "id": "d7f460bbd15e45b8b2269d36a113628b",
+      "name": "question_choice_other_channels",
+      "label": "Question Choice Other Channels",
+      "varType": "reference",
+      "table": "",
+      "category": "vaInputs",
+      "nodeId": "0270a40e70154b39bfefd1f7cb8e59b1",
+      "isHidden": false,
+      "autoSelect": false,
+      "autoSelectExpression": ""
+    },
+    "0f59fa11f10440a3b87813bd59631a47": {
+      "id": "0f59fa11f10440a3b87813bd59631a47",
+      "name": "search_reference",
+      "label": "Search Reference",
+      "varType": "string",
+      "secure": false,
+      "category": "vaInputs",
+      "encryptionHashFunction": "SHA-256",
+      "encryptionSalt": {
+        "value": "MTY1MDQ4NTE4OTAxMCBWQSBEZXNpZ25lciBpcyBhd2Vzb21l",
+        "mode": "simple"
+      },
+      "nodeId": "f62606ed1779447ab116ff33d1665363",
+      "isHidden": false
+    },
+    "965a4f9776964357a4bd78ba8273c1d7": {
+      "id": "965a4f9776964357a4bd78ba8273c1d7",
+      "name": "question_reference_other_channels",
+      "label": "Question Reference Other Channels",
+      "varType": "reference",
+      "table": "",
+      "category": "vaInputs",
+      "nodeId": "00ceea5c256d4b1c95de8cfac697ee7e",
+      "isHidden": false,
+      "autoSelect": false,
+      "autoSelectExpression": ""
+    },
+    "72d43c5d5bb2432a9482af829c8b2689": {
+      "id": "72d43c5d5bb2432a9482af829c8b2689",
+      "value": {
+        "mode": "script",
+        "value": "(function execute() {\n    /* return 'a default value'; */\n    return \"false\";\n})()\n"
+      },
+      "name": "no_records_found",
+      "label": "no_records_found",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "313d3e0c77e1487cbf65de249ff1a082": {
+      "id": "313d3e0c77e1487cbf65de249ff1a082",
+      "name": "change_response",
+      "label": "Change Response",
+      "varType": "boolean",
+      "secure": false,
+      "category": "vaInputs",
+      "nodeId": "57fd356114a64824b39a80f5ee817efb",
+      "isHidden": false
+    }
+  }
+}</graph>
+        <key_phrases>Submit a Request_r3ha</key_phrases>
+        <library>true</library>
+        <live_agent>false</live_agent>
+        <model_type>nlu_keyword</model_type>
+        <modify_confirmation_enabled>false</modify_confirmation_enabled>
+        <name>Submit a Request_r3ha</name>
+        <nlu_intent/>
+        <nlu_intent_label/>
+        <nlu_model/>
+        <nlu_model_label/>
+        <nlu_provider/>
+        <palette_label/>
+        <roles/>
+        <root_topic_id>3bffc2a5c363330012d1758a7ff57ebc</root_topic_id>
+        <secure_custom_input_control>false</secure_custom_input_control>
+        <source_topic_id>3bffc2a5c363330012d1758a7ff57ebc</source_topic_id>
+        <sys_class_name>sys_cb_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-09 21:15:28</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>5c32e9b547f4ea10f0631ce4316d43e2</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Submit a Request_r3ha</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_cb_topic_5c32e9b547f4ea10f0631ce4316d43e2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-09 21:15:47</sys_updated_on>
+        <title>Submit a Request</title>
+        <triggerable_by_notification>false</triggerable_by_notification>
+        <type>TOPIC_BLOCK</type>
+    </sys_cb_topic>
+    <sys_translated_text action="delete_multiple" query="documentkey=5c32e9b547f4ea10f0631ce4316d43e2"/>
+</record_update>
